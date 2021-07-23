@@ -28,7 +28,9 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"generate": "graphql-codegen --config codegen.yml"
+		"generate": "graphql-codegen --config codegen.yml",
+		"fresh:start": "npm run generate && npm run start",
+		"clean:install": "rm -rf node_modules && rm package-lock.json && npm cache clean --force && npm install"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -52,7 +54,6 @@
 		"@graphql-codegen/cli": "1.21.7",
 		"@graphql-codegen/typescript-react-apollo": "2.3.1",
 		"@graphql-codegen/typescript-operations": "1.18.4",
-		"@graphql-codegen/typescript": "1.23.0",
-		"@graphql-codegen/introspection": "1.18.2"
+		"@graphql-codegen/typescript": "1.23.0"
 	}
 }

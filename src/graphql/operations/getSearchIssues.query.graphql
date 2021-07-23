@@ -1,0 +1,30 @@
+query getSearchIssues($search_term: String!) {
+	search(query: $search_term, type: ISSUE, first: 20) {
+		issueCount
+		pageInfo {
+			endCursor
+			startCursor
+		}
+		codeCount
+		edges {
+			node {
+				... on Issue {
+					number
+					title
+					body
+					comments(first: 20) {
+						edges {
+							node {
+								id
+								author {
+									login
+								}
+								bodyHTML
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

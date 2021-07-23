@@ -22049,6 +22049,55 @@ export type GetRepoIssuesQuery = (
   )> }
 );
 
+export type GetSearchIssuesQueryVariables = Exact<{
+  search_term: Scalars['String'];
+}>;
+
+
+export type GetSearchIssuesQuery = (
+  { __typename?: 'Query' }
+  & { search: (
+    { __typename?: 'SearchResultItemConnection' }
+    & Pick<SearchResultItemConnection, 'issueCount' | 'codeCount'>
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'endCursor' | 'startCursor'>
+    ), edges?: Maybe<Array<Maybe<(
+      { __typename?: 'SearchResultItemEdge' }
+      & { node?: Maybe<{ __typename?: 'App' } | { __typename?: 'Discussion' } | (
+        { __typename?: 'Issue' }
+        & Pick<Issue, 'number' | 'title' | 'body'>
+        & { comments: (
+          { __typename?: 'IssueCommentConnection' }
+          & { edges?: Maybe<Array<Maybe<(
+            { __typename?: 'IssueCommentEdge' }
+            & { node?: Maybe<(
+              { __typename?: 'IssueComment' }
+              & Pick<IssueComment, 'id' | 'bodyHTML'>
+              & { author?: Maybe<(
+                { __typename?: 'Bot' }
+                & Pick<Bot, 'login'>
+              ) | (
+                { __typename?: 'EnterpriseUserAccount' }
+                & Pick<EnterpriseUserAccount, 'login'>
+              ) | (
+                { __typename?: 'Mannequin' }
+                & Pick<Mannequin, 'login'>
+              ) | (
+                { __typename?: 'Organization' }
+                & Pick<Organization, 'login'>
+              ) | (
+                { __typename?: 'User' }
+                & Pick<User, 'login'>
+              )> }
+            )> }
+          )>>> }
+        ) }
+      ) | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | { __typename?: 'Repository' } | { __typename?: 'User' }> }
+    )>>> }
+  ) }
+);
+
 
 export const GetRepoIssuesDocument = gql`
     query getRepoIssues($name: String!, $owner: String!) {
@@ -22092,3 +22141,63 @@ export function useGetRepoIssuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetRepoIssuesQueryHookResult = ReturnType<typeof useGetRepoIssuesQuery>;
 export type GetRepoIssuesLazyQueryHookResult = ReturnType<typeof useGetRepoIssuesLazyQuery>;
 export type GetRepoIssuesQueryResult = Apollo.QueryResult<GetRepoIssuesQuery, GetRepoIssuesQueryVariables>;
+export const GetSearchIssuesDocument = gql`
+    query getSearchIssues($search_term: String!) {
+  search(query: $search_term, type: ISSUE, first: 20) {
+    issueCount
+    pageInfo {
+      endCursor
+      startCursor
+    }
+    codeCount
+    edges {
+      node {
+        ... on Issue {
+          number
+          title
+          body
+          comments(first: 20) {
+            edges {
+              node {
+                id
+                author {
+                  login
+                }
+                bodyHTML
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSearchIssuesQuery__
+ *
+ * To run a query within a React component, call `useGetSearchIssuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSearchIssuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSearchIssuesQuery({
+ *   variables: {
+ *      search_term: // value for 'search_term'
+ *   },
+ * });
+ */
+export function useGetSearchIssuesQuery(baseOptions: Apollo.QueryHookOptions<GetSearchIssuesQuery, GetSearchIssuesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSearchIssuesQuery, GetSearchIssuesQueryVariables>(GetSearchIssuesDocument, options);
+      }
+export function useGetSearchIssuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSearchIssuesQuery, GetSearchIssuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSearchIssuesQuery, GetSearchIssuesQueryVariables>(GetSearchIssuesDocument, options);
+        }
+export type GetSearchIssuesQueryHookResult = ReturnType<typeof useGetSearchIssuesQuery>;
+export type GetSearchIssuesLazyQueryHookResult = ReturnType<typeof useGetSearchIssuesLazyQuery>;
+export type GetSearchIssuesQueryResult = Apollo.QueryResult<GetSearchIssuesQuery, GetSearchIssuesQueryVariables>;
