@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { useGetRepoIssuesQuery } from 'hooks/apihooks';
 
 function App() {
+	const { data, error, loading } = useGetRepoIssuesQuery({
+		variables: { name: 'react', owner: 'facebook' },
+	});
 	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
+		<div className="container">
+			{loading ? (
+				<>Loading...</>
+			) : error ? (
+				<>{error}</>
+			) : data?.repository?.issues?.nodes?.length ? (
+				<>
+					{data?.repository?.issues?.nodes?.map((issue, index) => (
+						<div key={index}>{issue?.title}</div>
+					))}
+				</>
+			) : null}
 		</div>
 	);
 }
