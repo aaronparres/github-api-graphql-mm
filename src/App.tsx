@@ -1,12 +1,28 @@
 import './App.scss';
-import { useGetRepoIssuesQuery } from 'hooks/apihooks';
+import {
+	useGetRepoIssuesQuery,
+	useGetSearchIssuesLazyQuery,
+} from 'hooks/apihooks';
+import { useState } from 'react';
 
 function App() {
+	const [input, setInput] = useState('');
+
 	const { data, error, loading } = useGetRepoIssuesQuery({
 		variables: { name: 'react', owner: 'facebook' },
 	});
+	const [
+		getSearchIssues,
+		{ data: dataSearch, error: errorSearch, loading: loadingSearch },
+	] = useGetSearchIssuesLazyQuery();
+
+	const searchInputHandler = () => {
+		getSearchIssues({ variables: { search_term: input } });
+	};
+
 	return (
 		<div className="container">
+			<h1>ISSUES</h1>
 			{loading ? (
 				<>Loading...</>
 			) : error ? (
@@ -15,6 +31,26 @@ function App() {
 				<>
 					{data?.repository?.issues?.nodes?.map((issue, index) => (
 						<div key={index}>{issue?.title}</div>
+					))}
+				</>
+			) : null}
+
+			<h1>SEARCH</h1>
+			<p>PATH: state in:title in:body is:issue is:open</p>
+			<input
+				type="text"
+				value={input}
+				onChange={(e) => setInput(e.target.value)}
+			/>
+			<button onClick={searchInputHandler}>Search</button>
+			{loadingSearch ? (
+				<>Loading...</>
+			) : errorSearch ? (
+				<>{error}</>
+			) : dataSearch?.search?.edges?.length ? (
+				<>
+					{dataSearch?.search?.edges?.map((issue, index) => (
+						<div key={index}>{`search ${JSON.stringify(issue)}`}</div>
 					))}
 				</>
 			) : null}
