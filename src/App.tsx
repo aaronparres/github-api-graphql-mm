@@ -1,9 +1,11 @@
-import './App.scss';
+import { useState } from 'react';
 import {
+	Issue,
 	useGetRepoIssuesQuery,
 	useGetSearchIssuesLazyQuery,
 } from 'hooks/apihooks';
-import { useState } from 'react';
+
+import './App.scss';
 
 function App() {
 	const [input, setInput] = useState('');
@@ -49,9 +51,11 @@ function App() {
 				<>{error}</>
 			) : dataSearch?.search?.edges?.length ? (
 				<>
-					{dataSearch?.search?.edges?.map((issue, index) => (
-						<div key={index}>{`search ${JSON.stringify(issue)}`}</div>
-					))}
+					{dataSearch?.search?.edges?.map((issue, index) => {
+						const issueCasted = issue?.node as Issue;
+						return <SearchItem key={index} issue={issueCasted} />;
+						// <div key={index}>{`search ${JSON.stringify(issue)}`}</div>
+					})}
 				</>
 			) : null}
 		</div>
@@ -59,3 +63,20 @@ function App() {
 }
 
 export default App;
+
+interface SearchItemProps {
+	issue: Issue;
+}
+
+function SearchItem({ issue }: SearchItemProps) {
+	return (
+		<>
+			<h2>{issue.title}</h2>
+			<div>
+				{issue?.comments?.edges?.map((comment, index) => (
+					<p key={index}>{comment?.node?.author?.login}</p>
+				))}
+			</div>
+		</>
+	);
+}
