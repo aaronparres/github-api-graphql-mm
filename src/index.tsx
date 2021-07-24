@@ -11,6 +11,7 @@ const client = new ApolloClient({
 		Authorization: `bearer ${process.env.REACT_APP_GITHUB_KEY}`,
 	},
 	cache: new InMemoryCache(),
+	connectToDevTools: process.env.NODE_ENV === 'development',
 });
 
 ReactDOM.render(
