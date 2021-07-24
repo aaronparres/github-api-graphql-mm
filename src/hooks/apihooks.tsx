@@ -22073,7 +22073,7 @@ export type GetSearchIssuesQuery = (
             { __typename?: 'IssueCommentEdge' }
             & { node?: Maybe<(
               { __typename?: 'IssueComment' }
-              & Pick<IssueComment, 'id' | 'bodyHTML'>
+              & Pick<IssueComment, 'bodyText' | 'id' | 'bodyHTML'>
               & { author?: Maybe<(
                 { __typename?: 'Bot' }
                 & Pick<Bot, 'login'>
@@ -22159,6 +22159,7 @@ export const GetSearchIssuesDocument = gql`
           comments(first: 20) {
             edges {
               node {
+                bodyText
                 id
                 author {
                   login

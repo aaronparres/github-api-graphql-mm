@@ -38,7 +38,7 @@ function App() {
 			) : null}
 
 			<h1>SEARCH</h1>
-			<p>PATH: state in:title in:body is:issue is:open</p>
+			<p>repo:facebook/react in:title in:body is:issue is:open state</p>
 			<input
 				type="text"
 				value={input}
@@ -74,7 +74,10 @@ function SearchItem({ issue }: SearchItemProps) {
 			<h2>{issue.title}</h2>
 			<div>
 				{issue?.comments?.edges?.map((comment, index) => (
-					<p key={index}>{comment?.node?.author?.login}</p>
+					<div key={index}>
+						<p>{comment?.node?.author?.login}</p>
+						<p>{comment?.node?.bodyText}</p>
+					</div>
 				))}
 			</div>
 		</>

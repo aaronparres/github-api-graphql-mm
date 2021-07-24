@@ -15,6 +15,7 @@ query getSearchIssues($search_term: String!) {
 					comments(first: 20) {
 						edges {
 							node {
+								bodyText
 								id
 								author {
 									login

@@ -1,5 +1,5 @@
 You will build a little search which allows to search for a text term in either the body or title of the issues as well as for the status OPEN or CLOSED
 
 {
-  "search_term": "state in:title in:body is:issue is:open"
+  "search_term": "state in:title in:body is:issue is:open repo:facebook/react"
 }
