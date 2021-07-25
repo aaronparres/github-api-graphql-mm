@@ -1,0 +1,69 @@
+.nav {
+	align-items: center;
+	display: flex;
+	background-color: none;
+	height: 60px;
+	justify-content: space-between;
+	padding: 20px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+	transition: all 0.2s;
+	transition-timing-function: ease-in;
+
+	&.showTab {
+		background-color: #090b13;
+	}
+
+	.logo {
+		margin-right: 1rem;
+		object-fit: contain;
+		width: 7rem;
+	}
+
+	a > .logo {
+		display: flex;
+		align-items: center;
+	}
+
+	.element {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		font-weight: 900;
+		justify-content: flex-end;
+		margin-right: 0;
+		text-decoration: none;
+
+		&__title {
+			display: none;
+		}
+	}
+
+	.iconWrapper {
+		align-items: center;
+		display: flex;
+		margin-right: 0.5rem;
+	}
+
+	@media (min-width: 479px) {
+		height: 80px;
+		justify-content: space-between;
+
+		.logo {
+			margin-left: 0.5rem;
+			width: 10rem;
+		}
+
+		.element {
+			margin-right: 2rem;
+
+			&__title {
+				color: #fff;
+				display: block;
+				font-size: 1.1rem;
+			}
+		}
+	}
+}

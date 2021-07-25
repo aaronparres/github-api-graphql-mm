@@ -7,10 +7,10 @@ import {
 	toggleListIssuesType,
 } from 'store/slices/settings';
 
-import IssueItem from './IssueItem';
-import './styles.scss';
+import ListItem from 'components/ListItem';
+import styles from './styles.module.scss';
 
-export default function IssuesList() {
+export default function Issues() {
 	const dispatch = useAppDispatch();
 	const listIssueType = useAppSelector(selectListIssueType);
 	const [getRepoIssues, { data, error, loading }] = useGetRepoIssuesLazyQuery();
@@ -26,26 +26,28 @@ export default function IssuesList() {
 	};
 
 	return (
-		<div className="container">
-			<div className="buttonContainer">
+		<div>
+			<div className={styles.buttonContainer}>
 				<div
 					className={`${
-						listIssueType === IssueState.Open ? 'buttonSelected' : 'buttonIdle'
+						listIssueType === IssueState.Open
+							? `${styles.buttonSelected} ${styles.open}`
+							: `${styles.buttonIdle} ${styles.open}`
 					}`}
 				>
-					<div onClick={() => switchHandler(IssueState.Open)}>OPEN</div>
+					<div onClick={() => switchHandler(IssueState.Open)}>Open</div>
 				</div>
 				<div
 					className={`${
 						listIssueType === IssueState.Closed
-							? 'buttonSelected'
-							: 'buttonIdle'
+							? `${styles.buttonSelected} ${styles.closed}`
+							: `${styles.buttonIdle} ${styles.closed}`
 					}`}
 				>
-					<div onClick={() => switchHandler(IssueState.Closed)}>CLOSED</div>
+					<div onClick={() => switchHandler(IssueState.Closed)}>Closed</div>
 				</div>
 			</div>
-			<h1>ISSUES</h1>
+			<h1 className={styles.mainTitle}>Issues</h1>
 			{loading ? (
 				<>Loading...</>
 			) : error ? (
@@ -53,13 +55,14 @@ export default function IssuesList() {
 			) : data?.repository?.issues?.edges?.length ? (
 				<>
 					{data?.repository?.issues.edges?.map((issue) => (
-						<Link key={issue?.node?.id} to={`issue/${issue?.node?.number}`}>
-							<IssueItem
-								user={issue?.node?.author?.login}
-								date={issue?.node?.createdAt}
-								title={issue?.node?.title}
-							/>
-						</Link>
+						<ListItem
+							key={issue?.node?.id}
+							number={issue?.node?.number}
+							state={issue?.node?.state}
+							user={issue?.node?.author?.login}
+							date={issue?.node?.createdAt}
+							title={issue?.node?.title}
+						/>
 					))}
 				</>
 			) : null}

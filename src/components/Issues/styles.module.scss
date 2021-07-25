@@ -6,6 +6,14 @@
 	flex-direction: row;
 	margin: 16px 0 10px;
 
+	.open {
+		color: #4daf4d;
+	}
+
+	.closed {
+		color: #cc4343;
+	}
+
 	.buttonIdle,
 	.buttonSelected {
 		font-size: 1.1rem;
@@ -43,4 +51,8 @@
 			font-size: 1.5rem;
 		}
 	}
+}
+
+.mainTitle {
+	margin: 2rem 0;
 }

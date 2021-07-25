@@ -1,23 +1,25 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import IssuesList from 'components/IssuesList';
+import Issues from 'components/Issues';
 import Search from 'components/Search';
 import IssueDetail from 'components/IssueDetail';
 import Navbar from 'components/Layout/Navbar';
 import Footer from 'components/Layout/Footer';
 
-import './App.scss';
+import styles from './App.module.scss';
 
 export default function App() {
 	return (
-		<div>
+		<div style={{ width: '100%' }}>
 			<Navbar />
-			<Switch>
-				<Route exact path="/issue/:number" component={IssueDetail} />
-				<Route exact path="/search" component={Search} />
-				<Route exact path="/" component={IssuesList} />
-				<Redirect to="/" />
-			</Switch>
+			<div className={styles.container}>
+				<Switch>
+					<Route exact path="/issue/:number" component={IssueDetail} />
+					<Route exact path="/search" component={Search} />
+					<Route exact path="/" component={Issues} />
+					<Redirect to="/" />
+				</Switch>
+			</div>
 			<Footer />
 		</div>
 	);

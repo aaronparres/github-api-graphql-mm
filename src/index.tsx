@@ -7,8 +7,6 @@ import { store } from 'store/createStore';
 
 import App from './App';
 
-import './index.scss';
-
 const client = new ApolloClient({
 	uri: 'https://api.github.com/graphql',
 	headers: {
