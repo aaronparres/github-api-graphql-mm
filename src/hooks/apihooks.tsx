@@ -22077,7 +22077,7 @@ export type GetIssueInfoQuery = { __typename?: 'Query' } & {
 			issue?: Maybe<
 				{ __typename?: 'Issue' } & Pick<
 					Issue,
-					'number' | 'id' | 'state' | 'title' | 'body'
+					'number' | 'id' | 'state' | 'title' | 'bodyHTML'
 				> & {
 						author?: Maybe<
 							| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
@@ -22256,7 +22256,7 @@ export const GetIssueInfoDocument = gql`
 				author {
 					login
 				}
-				body
+				bodyHTML
 				comments(first: 20) {
 					pageInfo {
 						endCursor
