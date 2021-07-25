@@ -1,39 +1,40 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-sass-guidelines",
-    "stylelint-config-recommended-scss"
-  ],
-  "plugins": ["stylelint-order"],
-  "rules": {
-    "selector-max-id": 1,
-    "number-leading-zero": null,
-    "max-nesting-depth": 3,
-    "order/properties-alphabetical-order": null,
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["global"]
-      }
-    ],
-    "selector-pseudo-element-no-unknown": [
-      true,
-      {
-        "ignorePseudoElements": ["global"]
-      }
-    ],
-    "selector-class-pattern": [
-      "^[a-z0-9]+(-?-[a-zA-Z0-9]+)*",
-      {
-        "message": "Class names should begin with lowercase, and can be separated by hyphens"
-      }
-    ],
-    "selector-no-qualifying-type": [
-      true,
-      {
-        "ignore": ["class"]
-      }
-    ],
-    "order/order": ["custom-properties", "declarations"]
-  }
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-sass-guidelines",
+		"stylelint-config-recommended-scss"
+	],
+	"plugins": ["stylelint-order"],
+	"rules": {
+		"indentation": "tab",
+		"selector-max-id": 1,
+		"number-leading-zero": null,
+		"max-nesting-depth": 3,
+		"order/properties-alphabetical-order": null,
+		"selector-pseudo-class-no-unknown": [
+			true,
+			{
+				"ignorePseudoClasses": ["global"]
+			}
+		],
+		"selector-pseudo-element-no-unknown": [
+			true,
+			{
+				"ignorePseudoElements": ["global"]
+			}
+		],
+		"selector-class-pattern": [
+			"^[a-z0-9]+(-?-[a-zA-Z0-9]+)*",
+			{
+				"message": "Class names should begin with lowercase, and can be separated by hyphens"
+			}
+		],
+		"selector-no-qualifying-type": [
+			true,
+			{
+				"ignore": ["class"]
+			}
+		],
+		"order/order": ["custom-properties", "declarations"]
+	}
 }
