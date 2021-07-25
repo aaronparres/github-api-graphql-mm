@@ -1,0 +1,29 @@
+query getIssueInfo($name: String!, $owner: String!, $number: Int!) {
+	repository(name: $name, owner: $owner) {
+		issue(number: $number) {
+			title
+			author {
+				login
+			}
+			body
+			comments(first: 20) {
+				pageInfo {
+					endCursor
+					startCursor
+					hasNextPage
+				}
+				edges {
+					cursor
+					node {
+						id
+						createdAt
+						author {
+							login
+						}
+						body
+					}
+				}
+			}
+		}
+	}
+}

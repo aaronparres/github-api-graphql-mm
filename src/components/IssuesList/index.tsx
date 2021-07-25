@@ -1,4 +1,5 @@
 import { useGetRepoIssuesQuery } from 'hooks/apihooks';
+import { Link } from 'react-router-dom';
 
 import IssueItem from './IssueItem';
 
@@ -17,12 +18,13 @@ export default function IssuesList() {
 			) : data?.repository?.issues?.edges?.length ? (
 				<>
 					{data?.repository?.issues.edges?.map((issue) => (
-						<IssueItem
-							key={issue?.node?.id}
-							user={issue?.node?.author?.login}
-							date={issue?.node?.createdAt}
-							title={issue?.node?.title}
-						/>
+						<Link key={issue?.node?.id} to={`issue/${issue?.node?.number}`}>
+							<IssueItem
+								user={issue?.node?.author?.login}
+								date={issue?.node?.createdAt}
+								title={issue?.node?.title}
+							/>
+						</Link>
 					))}
 				</>
 			) : null}

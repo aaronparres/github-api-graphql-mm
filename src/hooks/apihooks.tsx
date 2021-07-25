@@ -22029,6 +22029,69 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
 };
 
 
+export type GetIssueInfoQueryVariables = Exact<{
+  name: Scalars['String'];
+  owner: Scalars['String'];
+  number: Scalars['Int'];
+}>;
+
+
+export type GetIssueInfoQuery = (
+  { __typename?: 'Query' }
+  & { repository?: Maybe<(
+    { __typename?: 'Repository' }
+    & { issue?: Maybe<(
+      { __typename?: 'Issue' }
+      & Pick<Issue, 'title' | 'body'>
+      & { author?: Maybe<(
+        { __typename?: 'Bot' }
+        & Pick<Bot, 'login'>
+      ) | (
+        { __typename?: 'EnterpriseUserAccount' }
+        & Pick<EnterpriseUserAccount, 'login'>
+      ) | (
+        { __typename?: 'Mannequin' }
+        & Pick<Mannequin, 'login'>
+      ) | (
+        { __typename?: 'Organization' }
+        & Pick<Organization, 'login'>
+      ) | (
+        { __typename?: 'User' }
+        & Pick<User, 'login'>
+      )>, comments: (
+        { __typename?: 'IssueCommentConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
+        ), edges?: Maybe<Array<Maybe<(
+          { __typename?: 'IssueCommentEdge' }
+          & Pick<IssueCommentEdge, 'cursor'>
+          & { node?: Maybe<(
+            { __typename?: 'IssueComment' }
+            & Pick<IssueComment, 'id' | 'createdAt' | 'body'>
+            & { author?: Maybe<(
+              { __typename?: 'Bot' }
+              & Pick<Bot, 'login'>
+            ) | (
+              { __typename?: 'EnterpriseUserAccount' }
+              & Pick<EnterpriseUserAccount, 'login'>
+            ) | (
+              { __typename?: 'Mannequin' }
+              & Pick<Mannequin, 'login'>
+            ) | (
+              { __typename?: 'Organization' }
+              & Pick<Organization, 'login'>
+            ) | (
+              { __typename?: 'User' }
+              & Pick<User, 'login'>
+            )> }
+          )> }
+        )>>> }
+      ) }
+    )> }
+  )> }
+);
+
 export type GetRepoIssuesQueryVariables = Exact<{
   name: Scalars['String'];
   owner: Scalars['String'];
@@ -22049,7 +22112,7 @@ export type GetRepoIssuesQuery = (
         & Pick<IssueEdge, 'cursor'>
         & { node?: Maybe<(
           { __typename?: 'Issue' }
-          & Pick<Issue, 'id' | 'title' | 'createdAt' | 'body'>
+          & Pick<Issue, 'number' | 'id' | 'title' | 'createdAt' | 'body'>
           & { author?: Maybe<(
             { __typename?: 'Bot' }
             & Pick<Bot, 'login'>
@@ -22092,42 +22155,73 @@ export type GetSearchIssuesQuery = (
       & { node?: Maybe<{ __typename?: 'App' } | { __typename?: 'Discussion' } | (
         { __typename?: 'Issue' }
         & Pick<Issue, 'id' | 'number' | 'title' | 'body'>
-        & { comments: (
-          { __typename?: 'IssueCommentConnection' }
-          & { pageInfo: (
-            { __typename?: 'PageInfo' }
-            & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
-          ), edges?: Maybe<Array<Maybe<(
-            { __typename?: 'IssueCommentEdge' }
-            & Pick<IssueCommentEdge, 'cursor'>
-            & { node?: Maybe<(
-              { __typename?: 'IssueComment' }
-              & Pick<IssueComment, 'id' | 'createdAt' | 'body'>
-              & { author?: Maybe<(
-                { __typename?: 'Bot' }
-                & Pick<Bot, 'login'>
-              ) | (
-                { __typename?: 'EnterpriseUserAccount' }
-                & Pick<EnterpriseUserAccount, 'login'>
-              ) | (
-                { __typename?: 'Mannequin' }
-                & Pick<Mannequin, 'login'>
-              ) | (
-                { __typename?: 'Organization' }
-                & Pick<Organization, 'login'>
-              ) | (
-                { __typename?: 'User' }
-                & Pick<User, 'login'>
-              )> }
-            )> }
-          )>>> }
-        ) }
       ) | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | { __typename?: 'Repository' } | { __typename?: 'User' }> }
     )>>> }
   ) }
 );
 
 
+export const GetIssueInfoDocument = gql`
+    query getIssueInfo($name: String!, $owner: String!, $number: Int!) {
+  repository(name: $name, owner: $owner) {
+    issue(number: $number) {
+      title
+      author {
+        login
+      }
+      body
+      comments(first: 20) {
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            createdAt
+            author {
+              login
+            }
+            body
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetIssueInfoQuery__
+ *
+ * To run a query within a React component, call `useGetIssueInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssueInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIssueInfoQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *      owner: // value for 'owner'
+ *      number: // value for 'number'
+ *   },
+ * });
+ */
+export function useGetIssueInfoQuery(baseOptions: Apollo.QueryHookOptions<GetIssueInfoQuery, GetIssueInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIssueInfoQuery, GetIssueInfoQueryVariables>(GetIssueInfoDocument, options);
+      }
+export function useGetIssueInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssueInfoQuery, GetIssueInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIssueInfoQuery, GetIssueInfoQueryVariables>(GetIssueInfoDocument, options);
+        }
+export type GetIssueInfoQueryHookResult = ReturnType<typeof useGetIssueInfoQuery>;
+export type GetIssueInfoLazyQueryHookResult = ReturnType<typeof useGetIssueInfoLazyQuery>;
+export type GetIssueInfoQueryResult = Apollo.QueryResult<GetIssueInfoQuery, GetIssueInfoQueryVariables>;
 export const GetRepoIssuesDocument = gql`
     query getRepoIssues($name: String!, $owner: String!) {
   repository(name: $name, owner: $owner) {
@@ -22140,6 +22234,7 @@ export const GetRepoIssuesDocument = gql`
       edges {
         cursor
         node {
+          number
           id
           author {
             login
@@ -22199,24 +22294,6 @@ export const GetSearchIssuesDocument = gql`
           number
           title
           body
-          comments(first: 20) {
-            pageInfo {
-              endCursor
-              startCursor
-              hasNextPage
-            }
-            edges {
-              cursor
-              node {
-                id
-                createdAt
-                author {
-                  login
-                }
-                body
-              }
-            }
-          }
         }
       }
     }
