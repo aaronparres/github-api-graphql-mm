@@ -13,7 +13,7 @@ export default function App() {
 		<div>
 			<Navbar />
 			<Switch>
-				<Route exact path="/issue/:id" component={IssueDetail} />
+				<Route exact path="/issue/:number" component={IssueDetail} />
 				<Route exact path="/search" component={Search} />
 				<Route exact path="/" component={IssuesList} />
 				<Redirect to="/" />

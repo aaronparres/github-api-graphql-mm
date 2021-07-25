@@ -1,6 +1,9 @@
 query getIssueInfo($name: String!, $owner: String!, $number: Int!) {
 	repository(name: $name, owner: $owner) {
 		issue(number: $number) {
+			number
+			id
+			state
 			title
 			author {
 				login

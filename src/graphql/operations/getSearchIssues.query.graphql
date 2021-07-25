@@ -10,9 +10,14 @@ query getSearchIssues($search_term: String!, $cursor: String) {
 			cursor
 			node {
 				... on Issue {
-					id
 					number
+					id
+					state
+					author {
+						login
+					}
 					title
+					createdAt
 					body
 				}
 			}

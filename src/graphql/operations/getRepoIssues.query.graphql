@@ -1,8 +1,8 @@
-query getRepoIssues($name: String!, $owner: String!) {
+query getRepoIssues($name: String!, $owner: String!, $state: IssueState!) {
 	repository(name: $name, owner: $owner) {
 		issues(
 			first: 20
-			states: [OPEN]
+			states: [$state]
 			orderBy: { field: CREATED_AT, direction: DESC }
 		) {
 			pageInfo {
@@ -15,6 +15,7 @@ query getRepoIssues($name: String!, $owner: String!) {
 				node {
 					number
 					id
+					state
 					author {
 						login
 					}

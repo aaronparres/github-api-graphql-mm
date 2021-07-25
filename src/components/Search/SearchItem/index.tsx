@@ -1,14 +1,21 @@
 import { IssueCommentConnection } from 'hooks/apihooks';
+import { Link } from 'react-router-dom';
 
 interface SearchItemProps {
 	title?: string;
+	number: number;
 	text?: string;
 	comments?: IssueCommentConnection;
 }
 
-export default function SearchItem({ title, text, comments }: SearchItemProps) {
+export default function SearchItem({
+	title,
+	number,
+	text,
+	comments,
+}: SearchItemProps) {
 	return (
-		<>
+		<Link to={`/issue/${number}`}>
 			<h2>{title}</h2>
 			{/* <p>{text}</p> */}
 			<div>
@@ -23,6 +30,6 @@ export default function SearchItem({ title, text, comments }: SearchItemProps) {
 					))}
 			</div>
 			<b>_______________________</b>
-		</>
+		</Link>
 	);
 }

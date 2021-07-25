@@ -29,10 +29,11 @@ export default function Search() {
 			) : data?.search?.edges?.length ? (
 				<>
 					{data?.search?.edges?.map((issue) => {
-						const { title, id, body, comments } = issue?.node as Issue;
+						const { title, id, body, comments, number } = issue?.node as Issue;
 						return (
 							<SearchItem
 								key={id}
+								number={number}
 								title={title}
 								comments={comments}
 								text={body}
