@@ -1,6 +1,8 @@
 import { useGetIssueInfoQuery } from 'hooks/apihooks';
 import { useParams } from 'react-router-dom';
 
+import styles from './styles.module.scss';
+
 interface ParamTypes {
 	number: string;
 }
@@ -12,7 +14,7 @@ export default function IssueDetail() {
 	});
 
 	return (
-		<div>
+		<div className={styles.issueDetailContainer}>
 			{loading ? (
 				<>Loading...</>
 			) : error ? (
@@ -21,15 +23,17 @@ export default function IssueDetail() {
 				<>
 					<p>{data?.repository?.issue?.title}</p>
 					<p>{data?.repository?.issue?.number}</p>
-					<p>{data?.repository?.issue?.body}</p>
 					<p>{data?.repository?.issue?.author?.login}</p>
+					<div className={styles.textContent}>
+						{data?.repository?.issue?.body}
+					</div>
 					<h3>Comments</h3>
 					{data?.repository?.issue?.comments?.edges?.length
 						? data?.repository?.issue?.comments?.edges?.map((comment) => (
-								<>
-									<p key={comment?.node?.id}>{comment?.node?.body}</p>
-									_________________________
-								</>
+								<div key={comment?.node?.id} className={styles.textContent}>
+									{comment?.node?.body}
+									<p>________________________</p>
+								</div>
 						  ))
 						: 'No comments yet'}
 				</>

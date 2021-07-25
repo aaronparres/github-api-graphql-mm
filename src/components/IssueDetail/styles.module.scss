@@ -1,0 +1,12 @@
+.issueDetailContainer {
+	width: 100%;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	overflow: visible;
+	line-height: 1.5;
+
+	.textContent {
+		width: 100%;
+		text-align: left;
+	}
+}
