@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import {
 	Issue,
-	IssueCommentConnection,
 	useGetRepoIssuesQuery,
 	useGetSearchIssuesLazyQuery,
 } from 'hooks/apihooks';
+import SearchItem from 'components/SearchItem';
 
 import './App.scss';
 
-function App() {
+export default function App() {
 	const [input, setInput] = useState('');
 
 	const { data, error, loading } = useGetRepoIssuesQuery({
@@ -72,33 +72,5 @@ function App() {
 				</>
 			) : null}
 		</div>
-	);
-}
-
-export default App;
-
-interface SearchItemProps {
-	title?: string;
-	text?: string;
-	comments?: IssueCommentConnection;
-}
-
-function SearchItem({ title, text, comments }: SearchItemProps) {
-	return (
-		<>
-			<h2>{title}</h2>
-			{/* <p>{text}</p> */}
-			<div>
-				<h3>Comments</h3>
-				{comments?.edges?.map((comment) => (
-					<div key={comment?.node?.id}>
-						<p>{comment?.node?.author?.login}</p>
-						<p>{comment?.node?.createdAt}</p>
-						{/* <p>{comment?.node?.body}</p> */}
-					</div>
-				))}
-			</div>
-			<b>_______________________</b>
-		</>
 	);
 }
