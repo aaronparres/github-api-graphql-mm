@@ -22104,7 +22104,7 @@ export type GetIssueInfoQuery = { __typename?: 'Query' } & {
 												node?: Maybe<
 													{ __typename?: 'IssueComment' } & Pick<
 														IssueComment,
-														'id' | 'createdAt' | 'body'
+														'id' | 'createdAt' | 'bodyHTML'
 													> & {
 															author?: Maybe<
 																| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
@@ -22271,7 +22271,7 @@ export const GetIssueInfoDocument = gql`
 							author {
 								login
 							}
-							body
+							bodyHTML
 						}
 					}
 				}

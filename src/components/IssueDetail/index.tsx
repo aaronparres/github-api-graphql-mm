@@ -34,10 +34,14 @@ export default function IssueDetail() {
 					<h3>Comments</h3>
 					{data?.repository?.issue?.comments?.edges?.length
 						? data?.repository?.issue?.comments?.edges?.map((comment) => (
-								<div key={comment?.node?.id} className="markdown-body">
-									{comment?.node?.body}
-									<p>________________________</p>
-								</div>
+								<div
+									key={comment?.node?.id}
+									className="markdown-body"
+									style={{ color: '#fff' }}
+									dangerouslySetInnerHTML={{
+										__html: comment?.node?.bodyHTML,
+									}}
+								/>
 						  ))
 						: 'No comments yet'}
 				</>

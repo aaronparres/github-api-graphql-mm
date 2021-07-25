@@ -23,7 +23,7 @@ query getIssueInfo($name: String!, $owner: String!, $number: Int!) {
 						author {
 							login
 						}
-						body
+						bodyHTML
 					}
 				}
 			}
