@@ -1,9 +1,11 @@
-import { useState, SyntheticEvent, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { Issue, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
 
 import ListItem from 'components/ListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './styles.module.scss';
 
 export default function Search() {
 	const [input, setInput] = useState('');
@@ -20,14 +22,7 @@ export default function Search() {
 			<p>repo:facebook/react in:title in:body is:issue is:open state</p>
 			<form style={{ display: 'flex' }} onSubmit={searchInputHandler}>
 				<input
-					style={{
-						outline: 'none',
-						width: '80vw',
-						padding: '15px',
-						borderRadius: '15px',
-						border: '0',
-						fontSize: '1rem',
-					}}
+					className={styles.input}
 					type="text"
 					placeholder="Search issues..."
 					value={input}
