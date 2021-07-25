@@ -1,0 +1,46 @@
+.buttonContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin: 16px 0 10px;
+
+  .buttonIdle,
+  .buttonSelected {
+    font-size: 1.1rem;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.4;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 0 40px;
+    padding-bottom: 15px;
+    position: relative;
+    text-transform: uppercase;
+  }
+
+  .buttonSelected {
+    div::after {
+      background-color: rgb(249, 249, 249);
+      border-radius: 50px 50px 0 0;
+      content: '';
+      height: 3px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      opacity: 1;
+      transition: opacity 200ms ease 0s;
+    }
+  }
+
+  @media (min-width: 711px) {
+    .buttonIdle,
+    .buttonSelected {
+      font-size: 1.5rem;
+    }
+  }
+}

@@ -1,22 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from 'store/createStore';
+import { IssueState } from 'hooks/apihooks';
 
 interface settingsState {
-  name: string;
+  listIssuesType: IssueState;
 }
 
 const initialState: settingsState = {
-  name: 'obi wan',
+  listIssuesType: IssueState.Open,
 };
 
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    toggleListIssuesType: (state, action: PayloadAction<IssueState>) => {
+      state.listIssuesType = action.payload;
+    },
+  },
 });
 
 // SELECTORS
+export const selectListIssueType = (state: RootState) => state.settings.listIssuesType;
 
 // ACTIONS
-// export const {} = settingsSlice.actions;
+export const { toggleListIssuesType } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
