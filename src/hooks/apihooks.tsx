@@ -22158,7 +22158,7 @@ export type GetRepoIssuesQuery = { __typename?: 'Query' } & {
 									node?: Maybe<
 										{ __typename?: 'Issue' } & Pick<
 											Issue,
-											'number' | 'id' | 'state' | 'title' | 'createdAt' | 'body'
+											'number' | 'id' | 'state' | 'title' | 'createdAt'
 										> & {
 												author?: Maybe<
 													| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
@@ -22213,7 +22213,7 @@ export type GetSearchIssuesQuery = { __typename?: 'Query' } & {
 									| { __typename?: 'Discussion' }
 									| ({ __typename?: 'Issue' } & Pick<
 											Issue,
-											'number' | 'id' | 'state' | 'title' | 'createdAt' | 'body'
+											'number' | 'id' | 'state' | 'title' | 'createdAt'
 									  > & {
 												author?: Maybe<
 													| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
@@ -22356,7 +22356,6 @@ export const GetRepoIssuesDocument = gql`
 						}
 						title
 						createdAt
-						body
 					}
 				}
 			}
@@ -22437,7 +22436,6 @@ export const GetSearchIssuesDocument = gql`
 						}
 						title
 						createdAt
-						body
 					}
 				}
 			}

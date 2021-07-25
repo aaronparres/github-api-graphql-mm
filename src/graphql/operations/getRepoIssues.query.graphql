@@ -21,7 +21,6 @@ query getRepoIssues($name: String!, $owner: String!, $state: IssueState!) {
 					}
 					title
 					createdAt
-					body
 				}
 			}
 		}
