@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
 	Issue,
+	IssueCommentConnection,
 	useGetRepoIssuesQuery,
 	useGetSearchIssuesLazyQuery,
 } from 'hooks/apihooks';
@@ -29,10 +30,16 @@ function App() {
 				<>Loading...</>
 			) : error ? (
 				<>{error}</>
-			) : data?.repository?.issues?.nodes?.length ? (
+			) : data?.repository?.issues?.edges?.length ? (
 				<>
-					{data?.repository?.issues?.nodes?.map((issue, index) => (
-						<div key={index}>{issue?.title}</div>
+					{data?.repository?.issues.edges?.map((issue) => (
+						<div key={issue?.node?.id}>
+							<p>{issue?.node?.author?.login}</p>
+							<p>{issue?.node?.createdAt}</p>
+							<h2>{issue?.node?.title}</h2>
+							{/* <p>{issue?.node?.body}</p> */}
+							<b>_______________________</b>
+						</div>
 					))}
 				</>
 			) : null}
@@ -51,10 +58,16 @@ function App() {
 				<>{error}</>
 			) : dataSearch?.search?.edges?.length ? (
 				<>
-					{dataSearch?.search?.edges?.map((issue, index) => {
-						const issueCasted = issue?.node as Issue;
-						return <SearchItem key={index} issue={issueCasted} />;
-						// <div key={index}>{`search ${JSON.stringify(issue)}`}</div>
+					{dataSearch?.search?.edges?.map((issue) => {
+						const { title, id, body, comments } = issue?.node as Issue;
+						return (
+							<SearchItem
+								key={id}
+								title={title}
+								comments={comments}
+								text={body}
+							/>
+						);
 					})}
 				</>
 			) : null}
@@ -65,21 +78,27 @@ function App() {
 export default App;
 
 interface SearchItemProps {
-	issue: Issue;
+	title?: string;
+	text?: string;
+	comments?: IssueCommentConnection;
 }
 
-function SearchItem({ issue }: SearchItemProps) {
+function SearchItem({ title, text, comments }: SearchItemProps) {
 	return (
 		<>
-			<h2>{issue.title}</h2>
+			<h2>{title}</h2>
+			{/* <p>{text}</p> */}
 			<div>
-				{issue?.comments?.edges?.map((comment, index) => (
-					<div key={index}>
+				<h3>Comments</h3>
+				{comments?.edges?.map((comment) => (
+					<div key={comment?.node?.id}>
 						<p>{comment?.node?.author?.login}</p>
-						<p>{comment?.node?.bodyText}</p>
+						<p>{comment?.node?.createdAt}</p>
+						{/* <p>{comment?.node?.body}</p> */}
 					</div>
 				))}
 			</div>
+			<b>_______________________</b>
 		</>
 	);
 }

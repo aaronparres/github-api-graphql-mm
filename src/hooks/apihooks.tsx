@@ -22041,9 +22041,32 @@ export type GetRepoIssuesQuery = (
     { __typename?: 'Repository' }
     & { issues: (
       { __typename?: 'IssueConnection' }
-      & { nodes?: Maybe<Array<Maybe<(
-        { __typename?: 'Issue' }
-        & Pick<Issue, 'title' | 'createdAt' | 'bodyHTML'>
+      & { pageInfo: (
+        { __typename?: 'PageInfo' }
+        & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
+      ), edges?: Maybe<Array<Maybe<(
+        { __typename?: 'IssueEdge' }
+        & Pick<IssueEdge, 'cursor'>
+        & { node?: Maybe<(
+          { __typename?: 'Issue' }
+          & Pick<Issue, 'id' | 'title' | 'createdAt' | 'body'>
+          & { author?: Maybe<(
+            { __typename?: 'Bot' }
+            & Pick<Bot, 'login'>
+          ) | (
+            { __typename?: 'EnterpriseUserAccount' }
+            & Pick<EnterpriseUserAccount, 'login'>
+          ) | (
+            { __typename?: 'Mannequin' }
+            & Pick<Mannequin, 'login'>
+          ) | (
+            { __typename?: 'Organization' }
+            & Pick<Organization, 'login'>
+          ) | (
+            { __typename?: 'User' }
+            & Pick<User, 'login'>
+          )> }
+        )> }
       )>>> }
     ) }
   )> }
@@ -22051,6 +22074,7 @@ export type GetRepoIssuesQuery = (
 
 export type GetSearchIssuesQueryVariables = Exact<{
   search_term: Scalars['String'];
+  cursor?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -22058,22 +22082,27 @@ export type GetSearchIssuesQuery = (
   { __typename?: 'Query' }
   & { search: (
     { __typename?: 'SearchResultItemConnection' }
-    & Pick<SearchResultItemConnection, 'issueCount' | 'codeCount'>
+    & Pick<SearchResultItemConnection, 'issueCount'>
     & { pageInfo: (
       { __typename?: 'PageInfo' }
-      & Pick<PageInfo, 'endCursor' | 'startCursor'>
+      & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
     ), edges?: Maybe<Array<Maybe<(
       { __typename?: 'SearchResultItemEdge' }
+      & Pick<SearchResultItemEdge, 'cursor'>
       & { node?: Maybe<{ __typename?: 'App' } | { __typename?: 'Discussion' } | (
         { __typename?: 'Issue' }
-        & Pick<Issue, 'number' | 'title' | 'body'>
+        & Pick<Issue, 'id' | 'number' | 'title' | 'body'>
         & { comments: (
           { __typename?: 'IssueCommentConnection' }
-          & { edges?: Maybe<Array<Maybe<(
+          & { pageInfo: (
+            { __typename?: 'PageInfo' }
+            & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
+          ), edges?: Maybe<Array<Maybe<(
             { __typename?: 'IssueCommentEdge' }
+            & Pick<IssueCommentEdge, 'cursor'>
             & { node?: Maybe<(
               { __typename?: 'IssueComment' }
-              & Pick<IssueComment, 'bodyText' | 'id' | 'bodyHTML'>
+              & Pick<IssueComment, 'id' | 'createdAt' | 'body'>
               & { author?: Maybe<(
                 { __typename?: 'Bot' }
                 & Pick<Bot, 'login'>
@@ -22103,10 +22132,22 @@ export const GetRepoIssuesDocument = gql`
     query getRepoIssues($name: String!, $owner: String!) {
   repository(name: $name, owner: $owner) {
     issues(first: 20, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}) {
-      nodes {
-        title
-        createdAt
-        bodyHTML
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          author {
+            login
+          }
+          title
+          createdAt
+          body
+        }
       }
     }
   }
@@ -22142,29 +22183,37 @@ export type GetRepoIssuesQueryHookResult = ReturnType<typeof useGetRepoIssuesQue
 export type GetRepoIssuesLazyQueryHookResult = ReturnType<typeof useGetRepoIssuesLazyQuery>;
 export type GetRepoIssuesQueryResult = Apollo.QueryResult<GetRepoIssuesQuery, GetRepoIssuesQueryVariables>;
 export const GetSearchIssuesDocument = gql`
-    query getSearchIssues($search_term: String!) {
-  search(query: $search_term, type: ISSUE, first: 20) {
+    query getSearchIssues($search_term: String!, $cursor: String) {
+  search(query: $search_term, type: ISSUE, first: 20, after: $cursor) {
     issueCount
     pageInfo {
       endCursor
       startCursor
+      hasNextPage
     }
-    codeCount
     edges {
+      cursor
       node {
         ... on Issue {
+          id
           number
           title
           body
           comments(first: 20) {
+            pageInfo {
+              endCursor
+              startCursor
+              hasNextPage
+            }
             edges {
+              cursor
               node {
-                bodyText
                 id
+                createdAt
                 author {
                   login
                 }
-                bodyHTML
+                body
               }
             }
           }
@@ -22188,6 +22237,7 @@ export const GetSearchIssuesDocument = gql`
  * const { data, loading, error } = useGetSearchIssuesQuery({
  *   variables: {
  *      search_term: // value for 'search_term'
+ *      cursor: // value for 'cursor'
  *   },
  * });
  */

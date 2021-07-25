@@ -1,31 +1,39 @@
-query getSearchIssues($search_term: String!) {
-	search(query: $search_term, type: ISSUE, first: 20) {
-		issueCount
-		pageInfo {
-			endCursor
-			startCursor
-		}
-		codeCount
-		edges {
-			node {
-				... on Issue {
-					number
-					title
-					body
-					comments(first: 20) {
-						edges {
-							node {
-								bodyText
-								id
-								author {
-									login
-								}
-								bodyHTML
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+query getSearchIssues($search_term: String!, $cursor: String) {
+  search(query: $search_term, type: ISSUE, first: 20, after: $cursor) {
+    issueCount
+    pageInfo {
+      endCursor
+      startCursor
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        ... on Issue {
+          id
+          number
+          title
+          body
+          comments(first: 20) {
+            pageInfo {
+              endCursor
+              startCursor
+              hasNextPage
+            }
+            edges {
+              cursor
+              node {
+                id
+                createdAt
+                author {
+                  login
+                }
+                body
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
