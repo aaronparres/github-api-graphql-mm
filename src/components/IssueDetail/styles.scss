@@ -1,17 +1,19 @@
-.issueDetailContainer {
-	width: 100%;
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-	overflow: visible;
-	line-height: 1.5;
-
-	.textContent {
+.detail {
+	&-container {
 		width: 100%;
-		text-align: left;
+		word-wrap: break-word;
+		overflow: visible;
+		line-height: 1.5;
+	}
+
+	&-content {
+		width: 100%;
 	}
 }
 
 .markdown-body {
+	color: #fff !important;
+
 	pre,
 	.highlight pre {
 		color: #000;

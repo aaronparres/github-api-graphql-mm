@@ -3,12 +3,15 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
+	changeLoadingValue,
 	selectListIssueType,
+	showErrorModal,
 	toggleListIssuesType,
 } from 'store/slices/settings';
 
 import ListItem from 'components/ListItem';
 import styles from './styles.module.scss';
+import { ApolloError } from '@apollo/client';
 
 export default function Issues() {
 	const dispatch = useAppDispatch();
@@ -20,6 +23,16 @@ export default function Issues() {
 			variables: { name: 'react', owner: 'facebook', state: listIssueType },
 		});
 	}, [listIssueType]);
+
+	useEffect(() => {
+		dispatch(changeLoadingValue(loading));
+	}, [loading]);
+
+	useEffect(() => {
+		const error = new ApolloError({});
+		if (error == undefined) return;
+		dispatch(showErrorModal(true));
+	}, [error]);
 
 	const switchHandler = (state: IssueState) => {
 		dispatch(toggleListIssuesType(state));
@@ -48,11 +61,7 @@ export default function Issues() {
 				</div>
 			</div>
 			<h1 className={styles.mainTitle}>Issues</h1>
-			{loading ? (
-				<>Loading...</>
-			) : error ? (
-				<>{error}</>
-			) : data?.repository?.issues?.edges?.length ? (
+			{data?.repository?.issues?.edges?.length ? (
 				<>
 					{data?.repository?.issues.edges?.map((issue) => (
 						<ListItem
