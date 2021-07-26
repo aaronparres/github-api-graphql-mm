@@ -12,13 +12,17 @@ body {
 	background-color: #11131c;
 }
 
-.container {
-	width: 80vw;
-	min-height: 1100px;
-	margin: 0 auto;
-	padding-top: 70px;
+.app {
+	width: 100%;
 
-	@media (min-width: 479px) {
-		padding-top: 100px;
+	.container {
+		width: 80vw;
+		min-height: 1100px;
+		margin: 0 auto;
+		padding-top: 70px;
+
+		@media (min-width: 479px) {
+			padding-top: 100px;
+		}
 	}
 }
