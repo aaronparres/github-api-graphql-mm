@@ -12,9 +12,14 @@ interface ParamTypes {
 }
 
 export default function IssueDetail() {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	const dispatch = useAppDispatch();
 	const { number } = useParams<ParamTypes>();
 	const { data, error, loading } = useGetIssueInfoQuery({
+		fetchPolicy: 'cache-and-network',
 		variables: { name: 'react', owner: 'facebook', number: +number },
 	});
 

@@ -1,9 +1,12 @@
+import Backdrop from '../Backdrop';
 import styles from './styles.module.scss';
 
 export default function Spinner() {
 	return (
-		<div className={styles.container}>
-			<div className={styles.spinner}></div>
-		</div>
+		<Backdrop>
+			<div className={styles.container}>
+				<div className={styles.spinner}></div>
+			</div>
+		</Backdrop>
 	);
 }

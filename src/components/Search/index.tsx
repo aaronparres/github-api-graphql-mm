@@ -10,11 +10,15 @@ import styles from './styles.module.scss';
 import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
 
 export default function Search() {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	const dispatch = useAppDispatch();
 	const [input, setInput] = useState('');
 
 	const [getSearchIssues, { data, error, loading }] =
-		useGetSearchIssuesLazyQuery();
+		useGetSearchIssuesLazyQuery({ fetchPolicy: 'cache-and-network' });
 
 	useEffect(() => {
 		dispatch(changeLoadingValue(loading));

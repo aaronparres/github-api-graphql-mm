@@ -12,7 +12,26 @@ const client = new ApolloClient({
 	headers: {
 		Authorization: `bearer ${process.env.REACT_APP_GITHUB_KEY}`,
 	},
-	cache: new InMemoryCache(),
+	cache: new InMemoryCache({
+		typePolicies: {
+			Query: {
+				fields: {
+					repository: {
+						keyArgs: ['edges'],
+						merge(existing = [], incoming) {
+							return { ...existing, ...incoming };
+						},
+					},
+					search: {
+						keyArgs: ['edges'],
+						merge(existing = [], incoming) {
+							return { ...existing, ...incoming };
+						},
+					},
+				},
+			},
+		},
+	}),
 	connectToDevTools: process.env.NODE_ENV === 'development',
 });
 

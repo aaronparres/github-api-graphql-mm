@@ -14,9 +14,15 @@ import styles from './styles.module.scss';
 import { ApolloError } from '@apollo/client';
 
 export default function Issues() {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	const dispatch = useAppDispatch();
 	const listIssueType = useAppSelector(selectListIssueType);
-	const [getRepoIssues, { data, error, loading }] = useGetRepoIssuesLazyQuery();
+	const [getRepoIssues, { data, error, loading }] = useGetRepoIssuesLazyQuery({
+		fetchPolicy: 'cache-and-network',
+	});
 
 	useEffect(() => {
 		getRepoIssues({
