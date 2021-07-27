@@ -7,9 +7,13 @@ import Backdrop from 'components/UI/Backdrop';
 
 import styles from './styles.module.scss';
 
-export default function Modal() {
+interface ModalProps {
+	onClose: () => void;
+}
+
+export default function Modal({ onClose }: ModalProps) {
 	return (
-		<Backdrop>
+		<Backdrop onClose={onClose}>
 			<div className={styles.modal}>
 				<div className={styles.content}>
 					<div className={styles.iconWrapper}>

@@ -1,6 +1,10 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { isErrorModalShown, isLoading } from 'store/slices/settings';
-import { useAppSelector } from 'hooks/redux';
+import {
+	isErrorModalShown,
+	isLoading,
+	showErrorModal,
+} from 'store/slices/settings';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 
 import Issues from 'components/Issues';
 import Search from 'components/Search';
@@ -13,8 +17,11 @@ import Spinner from 'components/UI/Spinner';
 import Modal from 'components/UI/Modal';
 
 export default function App() {
+	const dispatch = useAppDispatch();
 	const loading = useAppSelector(isLoading);
 	const error = useAppSelector(isErrorModalShown);
+	const onCloseHandler = () => dispatch(showErrorModal(false));
+
 	return (
 		<div className={styles.app}>
 			<Navbar />
@@ -26,7 +33,7 @@ export default function App() {
 					<Redirect to="/" />
 				</Switch>
 				{loading && <Spinner />}
-				{error && <Modal />}
+				{error && <Modal onClose={onCloseHandler} />}
 			</div>
 			<Footer />
 		</div>

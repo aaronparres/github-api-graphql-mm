@@ -1,19 +1,13 @@
-import { useAppDispatch } from 'hooks/redux';
-import { showErrorModal } from 'store/slices/settings';
-
 import styles from './styles.module.scss';
 
 interface BackdropProps {
 	children: React.ReactNode;
+	onClose?: () => void;
 }
 
-export default function Backdrop({ children }: BackdropProps) {
-	const dispatch = useAppDispatch();
+export default function Backdrop({ children, onClose }: BackdropProps) {
 	return (
-		<div
-			className={styles.backdrop}
-			onClick={() => dispatch(showErrorModal(false))}
-		>
+		<div className={styles.backdrop} onClick={onClose}>
 			{children}
 		</div>
 	);

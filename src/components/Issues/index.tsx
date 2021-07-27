@@ -1,7 +1,7 @@
+import { useEffect } from 'react';
+
 import { IssueState, useGetRepoIssuesLazyQuery } from 'hooks/apihooks';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import {
 	changeLoadingValue,
 	selectListIssueType,
@@ -10,8 +10,8 @@ import {
 } from 'store/slices/settings';
 
 import ListItem from 'components/ListItem';
+
 import styles from './styles.module.scss';
-import { ApolloError } from '@apollo/client';
 
 export default function Issues() {
 	useEffect(() => {
@@ -35,7 +35,6 @@ export default function Issues() {
 	}, [loading]);
 
 	useEffect(() => {
-		const error = new ApolloError({});
 		if (error == undefined) return;
 		dispatch(showErrorModal(true));
 	}, [error]);

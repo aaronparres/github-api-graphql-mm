@@ -1,8 +1,8 @@
-import Spinner from 'components/UI/Spinner';
-import { useGetIssueInfoQuery } from 'hooks/apihooks';
-import { useAppDispatch } from 'hooks/redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { useGetIssueInfoQuery } from 'hooks/apihooks';
+import { useAppDispatch } from 'hooks/redux';
 import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
 
 import './styles.scss';

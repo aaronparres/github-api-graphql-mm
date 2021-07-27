@@ -1,13 +1,14 @@
 import { useState, FormEvent, useEffect } from 'react';
-import { Issue, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
-
-import ListItem from 'components/ListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import { useAppDispatch } from 'hooks/redux';
+import { Issue, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
+import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
+
+import ListItem from 'components/ListItem';
 
 import styles from './styles.module.scss';
-import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
 
 export default function Search() {
 	useEffect(() => {
@@ -33,6 +34,7 @@ export default function Search() {
 		e.preventDefault();
 		getSearchIssues({ variables: { search_term: input } });
 	};
+
 	return (
 		<div className={styles.search}>
 			<p>repo:facebook/react in:title in:body is:issue is:open state</p>
