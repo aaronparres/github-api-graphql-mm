@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { useAppDispatch } from 'hooks/redux';
-import { Issue, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
+import { Issue, Maybe, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
 import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
 
 import ListItem from 'components/ListItem';
@@ -33,6 +33,11 @@ export default function Search() {
 	const searchInputHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		getSearchIssues({ variables: { search_term: input } });
+	};
+
+	const pageHandler = (cursor: Maybe<string>, direction: string) => {
+		getSearchIssues({ variables: { search_term: input, [direction]: cursor } });
+		window.scrollTo(0, 0);
 	};
 
 	return (
@@ -66,6 +71,24 @@ export default function Search() {
 							/>
 						);
 					})}
+					{data?.search?.pageInfo?.hasPreviousPage && (
+						<button
+							onClick={() =>
+								pageHandler(data?.search?.pageInfo?.startCursor, 'before')
+							}
+						>
+							Previous
+						</button>
+					)}
+					{data?.search?.pageInfo?.hasNextPage && (
+						<button
+							onClick={() =>
+								pageHandler(data?.search?.pageInfo?.endCursor, 'after')
+							}
+						>
+							Next
+						</button>
+					)}
 				</>
 			) : null}
 		</div>

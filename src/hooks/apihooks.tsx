@@ -22150,50 +22150,54 @@ export type GetRepoIssuesQueryVariables = Exact<{
 export type GetRepoIssuesQuery = { __typename?: 'Query' } & {
 	repository?: Maybe<
 		{ __typename?: 'Repository' } & {
-			issues: { __typename?: 'IssueConnection' } & {
-				pageInfo: { __typename?: 'PageInfo' } & Pick<
-					PageInfo,
-					'startCursor' | 'endCursor' | 'hasPreviousPage' | 'hasNextPage'
-				>;
-				edges?: Maybe<
-					Array<
-						Maybe<
-							{ __typename?: 'IssueEdge' } & Pick<IssueEdge, 'cursor'> & {
-									node?: Maybe<
-										{ __typename?: 'Issue' } & Pick<
-											Issue,
-											'number' | 'id' | 'state' | 'title' | 'createdAt'
-										> & {
-												author?: Maybe<
-													| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
-													| ({ __typename?: 'EnterpriseUserAccount' } & Pick<
-															EnterpriseUserAccount,
-															'login'
-													  >)
-													| ({ __typename?: 'Mannequin' } & Pick<
-															Mannequin,
-															'login'
-													  >)
-													| ({ __typename?: 'Organization' } & Pick<
-															Organization,
-															'login'
-													  >)
-													| ({ __typename?: 'User' } & Pick<User, 'login'>)
-												>;
-											}
-									>;
-								}
+			issues: { __typename?: 'IssueConnection' } & Pick<
+				IssueConnection,
+				'totalCount'
+			> & {
+					pageInfo: { __typename?: 'PageInfo' } & Pick<
+						PageInfo,
+						'startCursor' | 'endCursor' | 'hasPreviousPage' | 'hasNextPage'
+					>;
+					edges?: Maybe<
+						Array<
+							Maybe<
+								{ __typename?: 'IssueEdge' } & Pick<IssueEdge, 'cursor'> & {
+										node?: Maybe<
+											{ __typename?: 'Issue' } & Pick<
+												Issue,
+												'number' | 'id' | 'state' | 'title' | 'createdAt'
+											> & {
+													author?: Maybe<
+														| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
+														| ({ __typename?: 'EnterpriseUserAccount' } & Pick<
+																EnterpriseUserAccount,
+																'login'
+														  >)
+														| ({ __typename?: 'Mannequin' } & Pick<
+																Mannequin,
+																'login'
+														  >)
+														| ({ __typename?: 'Organization' } & Pick<
+																Organization,
+																'login'
+														  >)
+														| ({ __typename?: 'User' } & Pick<User, 'login'>)
+													>;
+												}
+										>;
+									}
+							>
 						>
-					>
-				>;
-			};
+					>;
+				};
 		}
 	>;
 };
 
 export type GetSearchIssuesQueryVariables = Exact<{
 	search_term: Scalars['String'];
-	cursor?: Maybe<Scalars['String']>;
+	after?: Maybe<Scalars['String']>;
+	before?: Maybe<Scalars['String']>;
 }>;
 
 export type GetSearchIssuesQuery = { __typename?: 'Query' } & {
@@ -22203,7 +22207,7 @@ export type GetSearchIssuesQuery = { __typename?: 'Query' } & {
 	> & {
 			pageInfo: { __typename?: 'PageInfo' } & Pick<
 				PageInfo,
-				'endCursor' | 'startCursor' | 'hasNextPage'
+				'startCursor' | 'endCursor' | 'hasPreviousPage' | 'hasNextPage'
 			>;
 			edges?: Maybe<
 				Array<
@@ -22355,6 +22359,7 @@ export const GetRepoIssuesDocument = gql`
 				states: [$state]
 				orderBy: { field: CREATED_AT, direction: DESC }
 			) {
+				totalCount
 				pageInfo {
 					startCursor
 					endCursor
@@ -22436,12 +22441,23 @@ export type GetRepoIssuesQueryResult = Apollo.QueryResult<
 	GetRepoIssuesQueryVariables
 >;
 export const GetSearchIssuesDocument = gql`
-	query getSearchIssues($search_term: String!, $cursor: String) {
-		search(query: $search_term, type: ISSUE, first: 20, after: $cursor) {
+	query getSearchIssues(
+		$search_term: String!
+		$after: String
+		$before: String
+	) {
+		search(
+			query: $search_term
+			type: ISSUE
+			last: 20
+			after: $after
+			before: $before
+		) {
 			issueCount
 			pageInfo {
-				endCursor
 				startCursor
+				endCursor
+				hasPreviousPage
 				hasNextPage
 			}
 			edges {
@@ -22476,7 +22492,8 @@ export const GetSearchIssuesDocument = gql`
  * const { data, loading, error } = useGetSearchIssuesQuery({
  *   variables: {
  *      search_term: // value for 'search_term'
- *      cursor: // value for 'cursor'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
  *   },
  * });
  */
