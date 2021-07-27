@@ -10,13 +10,13 @@ export const client = new ApolloClient({
 			Query: {
 				fields: {
 					repository: {
-						keyArgs: ['edges'],
+						keyArgs: ['issues'],
 						merge(existing = [], incoming) {
 							return { ...existing, ...incoming };
 						},
 					},
 					search: {
-						keyArgs: ['edges'],
+						keyArgs: ['issue'],
 						merge(existing = [], incoming) {
 							return { ...existing, ...incoming };
 						},

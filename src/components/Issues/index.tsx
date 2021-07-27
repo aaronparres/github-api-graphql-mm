@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { IssueState, useGetRepoIssuesLazyQuery } from 'hooks/apihooks';
+import { IssueState, Maybe, useGetRepoIssuesLazyQuery } from 'hooks/apihooks';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import {
 	changeLoadingValue,
@@ -26,7 +26,12 @@ export default function Issues() {
 
 	useEffect(() => {
 		getRepoIssues({
-			variables: { name: 'react', owner: 'facebook', state: listIssueType },
+			variables: {
+				name: 'react',
+				owner: 'facebook',
+				state: listIssueType,
+				firstSize: 20,
+			},
 		});
 	}, [listIssueType]);
 
@@ -41,6 +46,20 @@ export default function Issues() {
 
 	const switchHandler = (state: IssueState) => {
 		dispatch(toggleListIssuesType(state));
+	};
+
+	const pageHandler = (cursor: Maybe<string>, direction: string) => {
+		getRepoIssues({
+			variables: {
+				firstSize: direction === 'after' ? 20 : null,
+				lastSize: direction === 'before' ? 20 : null,
+				[direction]: cursor,
+				name: 'react',
+				owner: 'facebook',
+				state: listIssueType,
+			},
+		});
+		window.scrollTo(0, 0);
 	};
 
 	return (
@@ -68,7 +87,7 @@ export default function Issues() {
 			<h1 className={styles.mainTitle}>Issues</h1>
 			{data?.repository?.issues?.edges?.length ? (
 				<>
-					{data?.repository?.issues.edges?.map((issue) => (
+					{data?.repository?.issues?.edges?.map((issue) => (
 						<ListItem
 							key={issue?.node?.id}
 							number={issue?.node?.number}
@@ -78,6 +97,30 @@ export default function Issues() {
 							title={issue?.node?.title}
 						/>
 					))}
+					{data?.repository?.issues?.pageInfo?.hasPreviousPage && (
+						<button
+							onClick={() =>
+								pageHandler(
+									data?.repository?.issues?.pageInfo?.startCursor,
+									'before',
+								)
+							}
+						>
+							Previous
+						</button>
+					)}
+					{data?.repository?.issues?.pageInfo?.hasNextPage && (
+						<button
+							onClick={() =>
+								pageHandler(
+									data?.repository?.issues?.pageInfo?.endCursor,
+									'after',
+								)
+							}
+						>
+							Next
+						</button>
+					)}
 				</>
 			) : null}
 		</div>

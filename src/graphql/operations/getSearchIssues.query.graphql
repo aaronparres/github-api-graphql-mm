@@ -2,8 +2,9 @@ query getSearchIssues($search_term: String!, $cursor: String) {
 	search(query: $search_term, type: ISSUE, first: 20, after: $cursor) {
 		issueCount
 		pageInfo {
-			endCursor
 			startCursor
+			endCursor
+			hasPreviousPage
 			hasNextPage
 		}
 		edges {
