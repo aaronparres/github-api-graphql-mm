@@ -1,13 +1,26 @@
-query getRepoIssues($name: String!, $owner: String!, $state: IssueState!) {
+query getRepoIssues(
+	$name: String!
+	$owner: String!
+	$state: IssueState!
+	$before: String
+	$after: String
+	$firstSize: Int
+	$lastSize: Int
+) {
 	repository(name: $name, owner: $owner) {
 		issues(
-			first: 20
+			before: $before
+			after: $after
+			first: $firstSize
+			last: $lastSize
 			states: [$state]
 			orderBy: { field: CREATED_AT, direction: DESC }
 		) {
+			totalCount
 			pageInfo {
-				endCursor
 				startCursor
+				endCursor
+				hasPreviousPage
 				hasNextPage
 			}
 			edges {
