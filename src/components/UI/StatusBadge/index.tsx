@@ -7,7 +7,7 @@ import { IssueState } from 'hooks/apihooks';
 
 import styles from './styles.module.scss';
 
-export default function StatusBadge({ state }: { state: IssueState }) {
+export default function StatusBadge({ state }: { state?: IssueState }) {
 	return (
 		<div
 			className={`${styles.state} ${
@@ -18,7 +18,7 @@ export default function StatusBadge({ state }: { state: IssueState }) {
 				<FontAwesomeIcon
 					icon={state === IssueState.Open ? faDotCircle : faCheckCircle}
 				/>{' '}
-				{`${state.charAt(0)}${state.toLowerCase().slice(1)}`}
+				{`${state?.charAt(0)}${state?.toLowerCase().slice(1)}`}
 			</span>
 		</div>
 	);

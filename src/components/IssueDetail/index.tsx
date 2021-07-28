@@ -70,19 +70,38 @@ export default function IssueDetail() {
 							}}
 						/>
 					</div>
-					<div>
-						<h3>Comments</h3>
-						{data?.repository?.issue?.comments?.edges?.length
-							? data?.repository?.issue?.comments?.edges?.map((comment) => (
+					<div className="comment-section">
+						<h2>Comments</h2>
+						{data?.repository?.issue?.comments?.edges?.length ? (
+							data?.repository?.issue?.comments?.edges?.map((comment) => (
+								<div key={comment?.node?.id} className="detail-content comment">
+									<div className="detail-header comment">
+										<div className="user">
+											<img
+												src={comment?.node?.author?.avatarUrl}
+												alt={comment?.node?.author?.login}
+											/>
+											<a href={comment?.node?.author?.url}>
+												<p className="name">{comment?.node?.author?.login}</p>
+											</a>
+											<p>
+												{`commented ${dateFormatter(
+													String(comment?.node?.publishedAt),
+												)}`}
+											</p>
+										</div>
+									</div>
 									<div
-										key={comment?.node?.id}
 										className="markdown-body"
 										dangerouslySetInnerHTML={{
 											__html: comment?.node?.bodyHTML,
 										}}
 									/>
-							  ))
-							: 'No comments yet'}
+								</div>
+							))
+						) : (
+							<h3>No comments yet</h3>
+						)}
 					</div>
 				</>
 			) : null}

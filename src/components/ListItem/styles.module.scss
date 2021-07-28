@@ -1,0 +1,56 @@
+.content {
+	width: 100%;
+	margin-bottom: 2rem;
+	background-color: #e0e0e0;
+	border-radius: 15px;
+	word-wrap: break-word;
+	overflow: visible;
+	line-height: 1.5;
+}
+
+.header {
+	padding: 25px;
+	color: #000;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	.status {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+
+		h2 {
+			margin-left: 1rem;
+		}
+	}
+
+	.number {
+		color: #35459c;
+		font-weight: bold;
+		margin-left: 0.6rem;
+	}
+
+	.user {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-top: 1rem;
+
+		img {
+			border-radius: 50px;
+			width: 2.2rem;
+		}
+
+		> a {
+			text-decoration: none;
+			color: #000;
+		}
+
+		.name {
+			margin-left: 0.5rem;
+			margin-right: 0.5rem;
+			font-weight: bold;
+		}
+	}
+}

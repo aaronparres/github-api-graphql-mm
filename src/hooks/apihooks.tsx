@@ -22102,10 +22102,6 @@ export type GetIssueInfoQuery = { __typename?: 'Query' } & {
 							  >)
 						>;
 						comments: { __typename?: 'IssueCommentConnection' } & {
-							pageInfo: { __typename?: 'PageInfo' } & Pick<
-								PageInfo,
-								'endCursor' | 'startCursor' | 'hasNextPage'
-							>;
 							edges?: Maybe<
 								Array<
 									Maybe<
@@ -22116,24 +22112,30 @@ export type GetIssueInfoQuery = { __typename?: 'Query' } & {
 												node?: Maybe<
 													{ __typename?: 'IssueComment' } & Pick<
 														IssueComment,
-														'id' | 'createdAt' | 'bodyHTML'
+														'id' | 'publishedAt' | 'bodyHTML'
 													> & {
 															author?: Maybe<
-																| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
+																| ({ __typename?: 'Bot' } & Pick<
+																		Bot,
+																		'login' | 'avatarUrl' | 'url'
+																  >)
 																| ({
 																		__typename?: 'EnterpriseUserAccount';
-																  } & Pick<EnterpriseUserAccount, 'login'>)
+																  } & Pick<
+																		EnterpriseUserAccount,
+																		'login' | 'avatarUrl' | 'url'
+																  >)
 																| ({ __typename?: 'Mannequin' } & Pick<
 																		Mannequin,
-																		'login'
+																		'login' | 'avatarUrl' | 'url'
 																  >)
 																| ({ __typename?: 'Organization' } & Pick<
 																		Organization,
-																		'login'
+																		'login' | 'avatarUrl' | 'url'
 																  >)
 																| ({ __typename?: 'User' } & Pick<
 																		User,
-																		'login'
+																		'login' | 'avatarUrl' | 'url'
 																  >)
 															>;
 														}
@@ -22180,20 +22182,26 @@ export type GetRepoIssuesQuery = { __typename?: 'Query' } & {
 												'number' | 'id' | 'state' | 'title' | 'createdAt'
 											> & {
 													author?: Maybe<
-														| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
+														| ({ __typename?: 'Bot' } & Pick<
+																Bot,
+																'login' | 'avatarUrl' | 'url'
+														  >)
 														| ({ __typename?: 'EnterpriseUserAccount' } & Pick<
 																EnterpriseUserAccount,
-																'login'
+																'login' | 'avatarUrl' | 'url'
 														  >)
 														| ({ __typename?: 'Mannequin' } & Pick<
 																Mannequin,
-																'login'
+																'login' | 'avatarUrl' | 'url'
 														  >)
 														| ({ __typename?: 'Organization' } & Pick<
 																Organization,
-																'login'
+																'login' | 'avatarUrl' | 'url'
 														  >)
-														| ({ __typename?: 'User' } & Pick<User, 'login'>)
+														| ({ __typename?: 'User' } & Pick<
+																User,
+																'login' | 'avatarUrl' | 'url'
+														  >)
 													>;
 												}
 										>;
@@ -22236,20 +22244,26 @@ export type GetSearchIssuesQuery = { __typename?: 'Query' } & {
 											'number' | 'id' | 'state' | 'title' | 'createdAt'
 									  > & {
 												author?: Maybe<
-													| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
+													| ({ __typename?: 'Bot' } & Pick<
+															Bot,
+															'login' | 'avatarUrl' | 'url'
+													  >)
 													| ({ __typename?: 'EnterpriseUserAccount' } & Pick<
 															EnterpriseUserAccount,
-															'login'
+															'login' | 'avatarUrl' | 'url'
 													  >)
 													| ({ __typename?: 'Mannequin' } & Pick<
 															Mannequin,
-															'login'
+															'login' | 'avatarUrl' | 'url'
 													  >)
 													| ({ __typename?: 'Organization' } & Pick<
 															Organization,
-															'login'
+															'login' | 'avatarUrl' | 'url'
 													  >)
-													| ({ __typename?: 'User' } & Pick<User, 'login'>)
+													| ({ __typename?: 'User' } & Pick<
+															User,
+															'login' | 'avatarUrl' | 'url'
+													  >)
 												>;
 											})
 									| { __typename?: 'MarketplaceListing' }
@@ -22281,18 +22295,15 @@ export const GetIssueInfoDocument = gql`
 				}
 				bodyHTML
 				comments(first: 20) {
-					pageInfo {
-						endCursor
-						startCursor
-						hasNextPage
-					}
 					edges {
 						cursor
 						node {
 							id
-							createdAt
+							publishedAt
 							author {
 								login
+								avatarUrl
+								url
 							}
 							bodyHTML
 						}
@@ -22389,6 +22400,8 @@ export const GetRepoIssuesDocument = gql`
 						state
 						author {
 							login
+							avatarUrl
+							url
 						}
 						title
 						createdAt
@@ -22484,6 +22497,8 @@ export const GetSearchIssuesDocument = gql`
 						state
 						author {
 							login
+							avatarUrl
+							url
 						}
 						title
 						createdAt

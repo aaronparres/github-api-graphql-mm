@@ -22,6 +22,8 @@ query getSearchIssues($search_term: String!, $after: String, $before: String) {
 					state
 					author {
 						login
+						avatarUrl
+						url
 					}
 					title
 					createdAt

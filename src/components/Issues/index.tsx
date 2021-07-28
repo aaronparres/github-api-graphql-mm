@@ -84,9 +84,10 @@ export default function Issues() {
 					<div onClick={() => switchHandler(IssueState.Closed)}>Closed</div>
 				</div>
 			</div>
-			<h1 className={styles.mainTitle}>Issues</h1>
+			<h2 className={styles.mainTitle}>Issues</h2>
 			{data?.repository?.issues?.edges?.length ? (
 				<>
+					<p>{`${data.repository.issues.totalCount} total issues`}</p>
 					{data?.repository?.issues?.edges?.map((issue) => (
 						<ListItem
 							key={issue?.node?.id}
@@ -95,6 +96,7 @@ export default function Issues() {
 							user={issue?.node?.author?.login}
 							date={issue?.node?.createdAt}
 							title={issue?.node?.title}
+							image={issue?.node?.author?.avatarUrl}
 						/>
 					))}
 					{data?.repository?.issues?.pageInfo?.hasPreviousPage && (

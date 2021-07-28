@@ -26,7 +26,7 @@ export default function Search() {
 	const [query, setQuery] = useState('');
 	const [errorInput, setErrorInput] = useState(false);
 
-	const [getSearchIssues, { data, error, loading }] =
+	const [getSearchIssues, { data, error, loading, called }] =
 		useGetSearchIssuesLazyQuery({ fetchPolicy: 'cache-and-network' });
 
 	useEffect(() => {
@@ -129,6 +129,7 @@ export default function Search() {
 				<p>Invalid value</p>
 			) : data?.search?.edges?.length ? (
 				<>
+					<p>{data.search.issueCount} total issues</p>
 					{data?.search?.edges?.map((issue) => {
 						const { title, id, number, state, createdAt, author } =
 							issue?.node as Issue;
@@ -140,6 +141,7 @@ export default function Search() {
 								user={author?.login}
 								date={createdAt}
 								title={title}
+								image={author?.avatarUrl}
 							/>
 						);
 					})}
@@ -163,7 +165,7 @@ export default function Search() {
 					)}
 				</>
 			) : (
-				<p>No results found...</p>
+				called && !loading && <p>No results found...</p>
 			)}
 		</div>
 	);
