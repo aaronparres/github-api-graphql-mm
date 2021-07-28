@@ -6,6 +6,8 @@ import { useAppDispatch } from 'hooks/redux';
 import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
 import { dateFormatter } from 'shared/utils/dateFormatter';
 
+import StatusBadge from 'components/UI/StatusBadge';
+
 import './styles.scss';
 
 interface ParamTypes {
@@ -39,7 +41,10 @@ export default function IssueDetail() {
 				<>
 					<div className="detail-content">
 						<div className="detail-header">
-							<p className="number"># {data?.repository?.issue?.number}</p>
+							<div className="top-status">
+								<p className="number"># {data?.repository?.issue?.number}</p>
+								<StatusBadge state={data?.repository?.issue?.state} />
+							</div>
 							<h2>{data?.repository?.issue?.title}</h2>
 							<div className="user">
 								<img

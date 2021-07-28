@@ -19,9 +19,16 @@
 		background-color: #e0e0e0;
 		color: #000;
 
+		.top-status {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+
 		.number {
 			color: #35459c;
 			font-weight: bold;
+			margin-right: 1rem;
 		}
 
 		.user {
