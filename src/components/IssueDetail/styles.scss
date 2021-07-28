@@ -8,11 +8,51 @@
 
 	&-content {
 		width: 100%;
+		background-color: #e0e0e0;
+		border: 1px solid #e0e0e0;
+		border-radius: 15px;
+	}
+
+	&-header {
+		border-radius: 15px 15px 0 0;
+		padding: 20px;
+		background-color: #e0e0e0;
+		color: #000;
+
+		.number {
+			color: #35459c;
+			font-weight: bold;
+		}
+
+		.user {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			img {
+				border-radius: 50px;
+				width: 2.2rem;
+			}
+
+			> a {
+				text-decoration: none;
+				color: #000;
+			}
+
+			.name {
+				margin-left: 0.5rem;
+				margin-right: 0.5rem;
+				font-weight: bold;
+			}
+		}
 	}
 }
 
 .markdown-body {
-	color: #fff !important;
+	border-radius: 0 0 15px 15px;
+	background-color: #11131c;
+	padding: 2rem;
+	color: #e0e0e0 !important;
 
 	pre,
 	.highlight pre {

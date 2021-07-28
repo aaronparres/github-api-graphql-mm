@@ -22077,17 +22077,29 @@ export type GetIssueInfoQuery = { __typename?: 'Query' } & {
 			issue?: Maybe<
 				{ __typename?: 'Issue' } & Pick<
 					Issue,
-					'number' | 'id' | 'state' | 'title' | 'bodyHTML'
+					'number' | 'id' | 'state' | 'title' | 'createdAt' | 'bodyHTML'
 				> & {
 						author?: Maybe<
-							| ({ __typename?: 'Bot' } & Pick<Bot, 'login'>)
+							| ({ __typename?: 'Bot' } & Pick<
+									Bot,
+									'login' | 'avatarUrl' | 'url'
+							  >)
 							| ({ __typename?: 'EnterpriseUserAccount' } & Pick<
 									EnterpriseUserAccount,
-									'login'
+									'login' | 'avatarUrl' | 'url'
 							  >)
-							| ({ __typename?: 'Mannequin' } & Pick<Mannequin, 'login'>)
-							| ({ __typename?: 'Organization' } & Pick<Organization, 'login'>)
-							| ({ __typename?: 'User' } & Pick<User, 'login'>)
+							| ({ __typename?: 'Mannequin' } & Pick<
+									Mannequin,
+									'login' | 'avatarUrl' | 'url'
+							  >)
+							| ({ __typename?: 'Organization' } & Pick<
+									Organization,
+									'login' | 'avatarUrl' | 'url'
+							  >)
+							| ({ __typename?: 'User' } & Pick<
+									User,
+									'login' | 'avatarUrl' | 'url'
+							  >)
 						>;
 						comments: { __typename?: 'IssueCommentConnection' } & {
 							pageInfo: { __typename?: 'PageInfo' } & Pick<
@@ -22261,8 +22273,11 @@ export const GetIssueInfoDocument = gql`
 				id
 				state
 				title
+				createdAt
 				author {
 					login
+					avatarUrl
+					url
 				}
 				bodyHTML
 				comments(first: 20) {
