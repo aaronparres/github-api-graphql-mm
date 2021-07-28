@@ -1,10 +1,15 @@
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import { useAppDispatch } from 'hooks/redux';
 import { Issue, Maybe, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
-import { changeLoadingValue, showErrorModal } from 'store/slices/settings';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import {
+	changeLoadingValue,
+	selectSearchIssuesType,
+	showErrorModal,
+	toggleSearchIssuesType,
+} from 'store/slices/settings';
 
 import ListItem from 'components/ListItem';
 
@@ -16,7 +21,10 @@ export default function Search() {
 	}, []);
 
 	const dispatch = useAppDispatch();
+	const searchIssuesType = useAppSelector(selectSearchIssuesType);
 	const [input, setInput] = useState('');
+	const [query, setQuery] = useState('');
+	const [errorInput, setErrorInput] = useState(false);
 
 	const [getSearchIssues, { data, error, loading }] =
 		useGetSearchIssuesLazyQuery({ fetchPolicy: 'cache-and-network' });
@@ -30,23 +38,67 @@ export default function Search() {
 		dispatch(showErrorModal(true));
 	}, [error]);
 
-	const searchInputHandler = (e: FormEvent<HTMLFormElement>) => {
+	useEffect(() => {
+		queryInputHandler(searchIssuesType);
+	}, [input]);
+
+	const queryComposer = (options: string[]) => {
+		const indexToClean = options.findIndex((op) => op === '');
+		if (indexToClean !== -1) options.splice(indexToClean, 1);
+		return options.join(' ').trim();
+	};
+
+	const searchFormHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		getSearchIssues({ variables: { search_term: input } });
+		if (input === '') {
+			setErrorInput(true);
+			return;
+		}
+		let composedQuery = '';
+		if (query === '') {
+			composedQuery = queryComposer([
+				'repo:facebook/react',
+				'is:issue',
+				'in:body',
+				'in:title',
+				input,
+			]);
+		}
+		setErrorInput(false);
+		getSearchIssues({ variables: { search_term: query || composedQuery } });
+	};
+
+	const queryInputHandler = (type: string) => {
+		const composedQuery = queryComposer([
+			'repo:facebook/react',
+			'is:issue',
+			'in:title',
+			'in:body',
+			getIssuesType(type),
+			input,
+		]);
+		setQuery(composedQuery);
+	};
+
+	const getIssuesType = (type: string): string => {
+		dispatch(toggleSearchIssuesType(type));
+		if (type === 'open' || type === 'closed') {
+			return `is:${type}`;
+		}
+		return '';
 	};
 
 	const pageHandler = (cursor: Maybe<string>, direction: string) => {
-		getSearchIssues({ variables: { search_term: input, [direction]: cursor } });
+		getSearchIssues({ variables: { search_term: query, [direction]: cursor } });
 		window.scrollTo(0, 0);
 	};
 
 	return (
 		<div className={styles.search}>
-			<p>repo:facebook/react in:title in:body is:issue is:open state</p>
-			<form className={styles.form} onSubmit={searchInputHandler}>
+			<form className={styles.form} onSubmit={searchFormHandler}>
 				<input
 					className={styles.input}
-					type="text"
+					type="search"
 					placeholder="Search issues..."
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
@@ -55,7 +107,27 @@ export default function Search() {
 					<FontAwesomeIcon icon={faSearch} />
 				</button>
 			</form>
-			{data?.search?.edges?.length ? (
+			<button
+				disabled={searchIssuesType === 'all'}
+				onClick={() => queryInputHandler('all')}
+			>
+				All
+			</button>
+			<button
+				disabled={searchIssuesType === 'open'}
+				onClick={() => queryInputHandler('open')}
+			>
+				Open
+			</button>
+			<button
+				disabled={searchIssuesType === 'closed'}
+				onClick={() => queryInputHandler('closed')}
+			>
+				Closed
+			</button>
+			{errorInput ? (
+				<p>Invalid value</p>
+			) : data?.search?.edges?.length ? (
 				<>
 					{data?.search?.edges?.map((issue) => {
 						const { title, id, number, state, createdAt, author } =
@@ -90,7 +162,9 @@ export default function Search() {
 						</button>
 					)}
 				</>
-			) : null}
+			) : (
+				<p>No results found...</p>
+			)}
 		</div>
 	);
 }

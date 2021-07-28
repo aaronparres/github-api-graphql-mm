@@ -6,12 +6,14 @@ interface settingsState {
 	loading: boolean;
 	showErrorModal: boolean;
 	listIssuesType: IssueState;
+	searchIssuesType: string;
 }
 
 const initialState: settingsState = {
 	loading: false,
 	showErrorModal: false,
 	listIssuesType: IssueState.Open,
+	searchIssuesType: 'all',
 };
 
 export const settingsSlice = createSlice({
@@ -27,6 +29,9 @@ export const settingsSlice = createSlice({
 		toggleListIssuesType: (state, action: PayloadAction<IssueState>) => {
 			state.listIssuesType = action.payload;
 		},
+		toggleSearchIssuesType: (state, action: PayloadAction<string>) => {
+			state.searchIssuesType = action.payload;
+		},
 	},
 });
 
@@ -39,8 +44,15 @@ export const isErrorModalShown = (state: RootState) =>
 export const selectListIssueType = (state: RootState) =>
 	state.settings.listIssuesType;
 
+export const selectSearchIssuesType = (state: RootState) =>
+	state.settings.searchIssuesType;
+
 // ACTIONS
-export const { changeLoadingValue, showErrorModal, toggleListIssuesType } =
-	settingsSlice.actions;
+export const {
+	changeLoadingValue,
+	showErrorModal,
+	toggleListIssuesType,
+	toggleSearchIssuesType,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;
