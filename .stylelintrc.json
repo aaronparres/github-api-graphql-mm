@@ -9,7 +9,8 @@
 		"indentation": "tab",
 		"selector-max-id": 1,
 		"number-leading-zero": null,
-		"max-nesting-depth": 3,
+		"max-nesting-depth": 4,
+		"selector-max-compound-selectors": 5,
 		"order/properties-alphabetical-order": null,
 		"selector-pseudo-class-no-unknown": [
 			true,

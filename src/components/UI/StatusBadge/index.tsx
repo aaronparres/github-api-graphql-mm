@@ -7,7 +7,11 @@ import { IssueState } from 'hooks/apihooks';
 
 import styles from './styles.module.scss';
 
-export default function StatusBadge({ state }: { state?: IssueState }) {
+interface StatusBadgeProps {
+	state?: IssueState;
+}
+
+export default function StatusBadge({ state }: StatusBadgeProps) {
 	return (
 		<div
 			className={`${styles.state} ${
