@@ -1,0 +1,17 @@
+.state {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-radius: 2em;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 20px;
+	padding: 8px 15px;
+	text-align: center;
+	white-space: nowrap;
+	border: 1px solid rgba(164, 87, 171, 0.4);
+	color: #fff;
+	background-color: #9633a3;
+	margin: 0 1rem 1rem 0;
+	cursor: pointer;
+}
