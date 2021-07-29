@@ -47,15 +47,17 @@ export default function IssueDetail() {
 							</div>
 							<h2>{data?.repository?.issue?.title}</h2>
 							<div className="user">
-								<img
-									src={data?.repository?.issue?.author?.avatarUrl}
-									alt={data?.repository?.issue?.author?.login}
-								/>
-								<a href={data.repository.issue.author?.url}>
-									<p className="name">
-										{data?.repository?.issue?.author?.login}
-									</p>
-								</a>
+								<div className="user-profile">
+									<img
+										src={data?.repository?.issue?.author?.avatarUrl}
+										alt={data?.repository?.issue?.author?.login}
+									/>
+									<a href={data.repository.issue.author?.url}>
+										<p className="name">
+											{data?.repository?.issue?.author?.login}
+										</p>
+									</a>
+								</div>
 								<p>
 									{`opened ${dateFormatter(
 										String(data.repository.issue.createdAt),
@@ -76,14 +78,16 @@ export default function IssueDetail() {
 							data?.repository?.issue?.comments?.edges?.map((comment) => (
 								<div key={comment?.node?.id} className="detail-content comment">
 									<div className="detail-header comment">
-										<div className="user">
-											<img
-												src={comment?.node?.author?.avatarUrl}
-												alt={comment?.node?.author?.login}
-											/>
-											<a href={comment?.node?.author?.url}>
-												<p className="name">{comment?.node?.author?.login}</p>
-											</a>
+										<div className="user comment">
+											<div className="user-profile">
+												<img
+													src={comment?.node?.author?.avatarUrl}
+													alt={comment?.node?.author?.login}
+												/>
+												<a href={comment?.node?.author?.url}>
+													<p className="name">{comment?.node?.author?.login}</p>
+												</a>
+											</div>
 											<p>
 												{`commented ${dateFormatter(
 													String(comment?.node?.publishedAt),
