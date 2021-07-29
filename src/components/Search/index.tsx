@@ -13,6 +13,7 @@ import {
 
 import ListItem from 'components/ListItem';
 import PaginationButtonRow from 'components/UI/PaginationButtonRow';
+import FilterButton from 'components/UI/FilterButton';
 
 import styles from './styles.module.scss';
 
@@ -96,6 +97,28 @@ export default function Search() {
 
 	return (
 		<div className={styles.search}>
+			<div className={styles.filtersContainer}>
+				<span>
+					<p>Filter by:</p>
+				</span>
+				<div className={styles.buttonRow}>
+					<FilterButton
+						isActive={searchIssuesType === 'all'}
+						state={'all'}
+						filterHandler={() => queryInputHandler('all')}
+					/>
+					<FilterButton
+						isActive={searchIssuesType === 'open'}
+						state={'open'}
+						filterHandler={() => queryInputHandler('open')}
+					/>
+					<FilterButton
+						isActive={searchIssuesType === 'closed'}
+						state={'closed'}
+						filterHandler={() => queryInputHandler('closed')}
+					/>
+				</div>
+			</div>
 			<form className={styles.form} onSubmit={searchFormHandler}>
 				<input
 					className={styles.input}
@@ -108,24 +131,7 @@ export default function Search() {
 					<FontAwesomeIcon icon={faSearch} />
 				</button>
 			</form>
-			<button
-				disabled={searchIssuesType === 'all'}
-				onClick={() => queryInputHandler('all')}
-			>
-				All
-			</button>
-			<button
-				disabled={searchIssuesType === 'open'}
-				onClick={() => queryInputHandler('open')}
-			>
-				Open
-			</button>
-			<button
-				disabled={searchIssuesType === 'closed'}
-				onClick={() => queryInputHandler('closed')}
-			>
-				Closed
-			</button>
+
 			{errorInput ? (
 				<p>Invalid value</p>
 			) : data?.search?.edges?.length ? (

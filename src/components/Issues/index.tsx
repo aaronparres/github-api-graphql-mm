@@ -10,10 +10,10 @@ import {
 } from 'store/slices/settings';
 
 import ListItem from 'components/ListItem';
+import PaginationButtonRow from 'components/UI/PaginationButtonRow';
+import FilterButton from 'components/UI/FilterButton';
 
 import styles from './styles.module.scss';
-import PaginationButton from 'components/UI/PaginationButtonRow/PaginationButton';
-import PaginationButtonRow from 'components/UI/PaginationButtonRow';
 
 export default function Issues() {
 	useEffect(() => {
@@ -65,30 +65,22 @@ export default function Issues() {
 	};
 
 	return (
-		<>
+		<div className={styles.issuesContainer}>
 			<h2 className={styles.mainTitle}>Issues</h2>
-			<div className={styles.buttonContainer}>
-				<div
-					className={`${
-						listIssueType === IssueState.Open
-							? `${styles.buttonSelected} ${styles.open}`
-							: `${styles.buttonIdle} ${styles.open}`
-					}`}
-				>
-					<div onClick={() => switchHandler(IssueState.Open)}>Open</div>
-				</div>
-				<div
-					className={`${
-						listIssueType === IssueState.Closed
-							? `${styles.buttonSelected} ${styles.closed}`
-							: `${styles.buttonIdle} ${styles.closed}`
-					}`}
-				>
-					<div onClick={() => switchHandler(IssueState.Closed)}>Closed</div>
-				</div>
+			<div className={styles.filtersContainer}>
+				<FilterButton
+					isActive={listIssueType === IssueState.Open}
+					state={'open'}
+					filterHandler={() => switchHandler(IssueState.Open)}
+				/>
+				<FilterButton
+					isActive={listIssueType === IssueState.Closed}
+					state={'closed'}
+					filterHandler={() => switchHandler(IssueState.Closed)}
+				/>
 			</div>
 			{data?.repository?.issues?.edges?.length ? (
-				<div className={styles.listContainer}>
+				<>
 					<p>{`${data.repository.issues.totalCount} total issues`}</p>
 					{data?.repository?.issues?.edges?.map((issue) => (
 						<ListItem
@@ -108,8 +100,8 @@ export default function Issues() {
 						startCursor={data?.repository?.issues?.pageInfo?.startCursor}
 						endCursor={data?.repository?.issues?.pageInfo?.endCursor}
 					/>
-				</div>
+				</>
 			) : null}
-		</>
+		</div>
 	);
 }
