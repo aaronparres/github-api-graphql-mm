@@ -5,23 +5,23 @@ query getIssueInfo($name: String!, $owner: String!, $number: Int!) {
 			id
 			state
 			title
+			createdAt
 			author {
 				login
+				avatarUrl
+				url
 			}
 			bodyHTML
 			comments(first: 20) {
-				pageInfo {
-					endCursor
-					startCursor
-					hasNextPage
-				}
 				edges {
 					cursor
 					node {
 						id
-						createdAt
+						publishedAt
 						author {
 							login
+							avatarUrl
+							url
 						}
 						bodyHTML
 					}

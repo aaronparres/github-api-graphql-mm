@@ -56,3 +56,15 @@
 .mainTitle {
 	margin: 2rem 0;
 }
+
+.listContainer {
+	width: 100%;
+	word-wrap: break-word;
+	overflow: visible;
+	line-height: 1.5;
+
+	> p {
+		font-size: 1.2rem;
+		margin-bottom: 1rem;
+	}
+}

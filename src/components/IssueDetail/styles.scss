@@ -8,14 +8,84 @@
 
 	&-content {
 		width: 100%;
+		background-color: #e0e0e0;
+		border: 1px solid #e0e0e0;
+		border-radius: 15px;
+
+		&.comment {
+			margin-bottom: 2.5rem;
+		}
+	}
+
+	&-header {
+		border-radius: 15px 15px 0 0;
+		padding: 20px;
+		background-color: #e0e0e0;
+		color: #000;
+
+		&.comment {
+			padding: 10px 20px;
+		}
+
+		.top-status {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+
+		.number {
+			color: #35459c;
+			font-weight: bold;
+			margin-right: 1rem;
+		}
+
+		.user {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 1rem;
+
+			img {
+				border-radius: 50px;
+				width: 2.2rem;
+			}
+
+			> a {
+				text-decoration: none;
+				color: #000;
+			}
+
+			.name {
+				margin-left: 0.5rem;
+				margin-right: 0.5rem;
+				font-weight: bold;
+			}
+
+			@media (min-width: 768px) {
+				flex-direction: row;
+				margin-top: 0;
+			}
+		}
 	}
 }
 
 .markdown-body {
-	color: #fff !important;
+	border-radius: 0 0 15px 15px;
+	background-color: #11131c;
+	padding: 2rem;
+	color: #e0e0e0 !important;
 
 	pre,
 	.highlight pre {
 		color: #000;
+	}
+}
+
+.comment-section {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+
+	h2 {
+		margin-bottom: 2rem;
 	}
 }

@@ -3,6 +3,12 @@
 	word-wrap: break-word;
 	overflow: hidden;
 
+	> p {
+		font-size: 1.2rem;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+	}
+
 	.form {
 		display: flex;
 

@@ -22042,48 +22042,45 @@ export type GetIssueInfoQuery = (
     { __typename?: 'Repository' }
     & { issue?: Maybe<(
       { __typename?: 'Issue' }
-      & Pick<Issue, 'number' | 'id' | 'state' | 'title' | 'bodyHTML'>
+      & Pick<Issue, 'number' | 'id' | 'state' | 'title' | 'createdAt' | 'bodyHTML'>
       & { author?: Maybe<(
         { __typename?: 'Bot' }
-        & Pick<Bot, 'login'>
+        & Pick<Bot, 'login' | 'avatarUrl' | 'url'>
       ) | (
         { __typename?: 'EnterpriseUserAccount' }
-        & Pick<EnterpriseUserAccount, 'login'>
+        & Pick<EnterpriseUserAccount, 'login' | 'avatarUrl' | 'url'>
       ) | (
         { __typename?: 'Mannequin' }
-        & Pick<Mannequin, 'login'>
+        & Pick<Mannequin, 'login' | 'avatarUrl' | 'url'>
       ) | (
         { __typename?: 'Organization' }
-        & Pick<Organization, 'login'>
+        & Pick<Organization, 'login' | 'avatarUrl' | 'url'>
       ) | (
         { __typename?: 'User' }
-        & Pick<User, 'login'>
+        & Pick<User, 'login' | 'avatarUrl' | 'url'>
       )>, comments: (
         { __typename?: 'IssueCommentConnection' }
-        & { pageInfo: (
-          { __typename?: 'PageInfo' }
-          & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
-        ), edges?: Maybe<Array<Maybe<(
+        & { edges?: Maybe<Array<Maybe<(
           { __typename?: 'IssueCommentEdge' }
           & Pick<IssueCommentEdge, 'cursor'>
           & { node?: Maybe<(
             { __typename?: 'IssueComment' }
-            & Pick<IssueComment, 'id' | 'createdAt' | 'bodyHTML'>
+            & Pick<IssueComment, 'id' | 'publishedAt' | 'bodyHTML'>
             & { author?: Maybe<(
               { __typename?: 'Bot' }
-              & Pick<Bot, 'login'>
+              & Pick<Bot, 'login' | 'avatarUrl' | 'url'>
             ) | (
               { __typename?: 'EnterpriseUserAccount' }
-              & Pick<EnterpriseUserAccount, 'login'>
+              & Pick<EnterpriseUserAccount, 'login' | 'avatarUrl' | 'url'>
             ) | (
               { __typename?: 'Mannequin' }
-              & Pick<Mannequin, 'login'>
+              & Pick<Mannequin, 'login' | 'avatarUrl' | 'url'>
             ) | (
               { __typename?: 'Organization' }
-              & Pick<Organization, 'login'>
+              & Pick<Organization, 'login' | 'avatarUrl' | 'url'>
             ) | (
               { __typename?: 'User' }
-              & Pick<User, 'login'>
+              & Pick<User, 'login' | 'avatarUrl' | 'url'>
             )> }
           )> }
         )>>> }
@@ -22096,6 +22093,10 @@ export type GetRepoIssuesQueryVariables = Exact<{
   name: Scalars['String'];
   owner: Scalars['String'];
   state: IssueState;
+  before?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  firstSize?: Maybe<Scalars['Int']>;
+  lastSize?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -22105,9 +22106,10 @@ export type GetRepoIssuesQuery = (
     { __typename?: 'Repository' }
     & { issues: (
       { __typename?: 'IssueConnection' }
+      & Pick<IssueConnection, 'totalCount'>
       & { pageInfo: (
         { __typename?: 'PageInfo' }
-        & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
+        & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasPreviousPage' | 'hasNextPage'>
       ), edges?: Maybe<Array<Maybe<(
         { __typename?: 'IssueEdge' }
         & Pick<IssueEdge, 'cursor'>
@@ -22116,19 +22118,19 @@ export type GetRepoIssuesQuery = (
           & Pick<Issue, 'number' | 'id' | 'state' | 'title' | 'createdAt'>
           & { author?: Maybe<(
             { __typename?: 'Bot' }
-            & Pick<Bot, 'login'>
+            & Pick<Bot, 'login' | 'avatarUrl' | 'url'>
           ) | (
             { __typename?: 'EnterpriseUserAccount' }
-            & Pick<EnterpriseUserAccount, 'login'>
+            & Pick<EnterpriseUserAccount, 'login' | 'avatarUrl' | 'url'>
           ) | (
             { __typename?: 'Mannequin' }
-            & Pick<Mannequin, 'login'>
+            & Pick<Mannequin, 'login' | 'avatarUrl' | 'url'>
           ) | (
             { __typename?: 'Organization' }
-            & Pick<Organization, 'login'>
+            & Pick<Organization, 'login' | 'avatarUrl' | 'url'>
           ) | (
             { __typename?: 'User' }
-            & Pick<User, 'login'>
+            & Pick<User, 'login' | 'avatarUrl' | 'url'>
           )> }
         )> }
       )>>> }
@@ -22138,7 +22140,8 @@ export type GetRepoIssuesQuery = (
 
 export type GetSearchIssuesQueryVariables = Exact<{
   search_term: Scalars['String'];
-  cursor?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -22149,7 +22152,7 @@ export type GetSearchIssuesQuery = (
     & Pick<SearchResultItemConnection, 'issueCount'>
     & { pageInfo: (
       { __typename?: 'PageInfo' }
-      & Pick<PageInfo, 'endCursor' | 'startCursor' | 'hasNextPage'>
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasPreviousPage' | 'hasNextPage'>
     ), edges?: Maybe<Array<Maybe<(
       { __typename?: 'SearchResultItemEdge' }
       & Pick<SearchResultItemEdge, 'cursor'>
@@ -22158,19 +22161,19 @@ export type GetSearchIssuesQuery = (
         & Pick<Issue, 'number' | 'id' | 'state' | 'title' | 'createdAt'>
         & { author?: Maybe<(
           { __typename?: 'Bot' }
-          & Pick<Bot, 'login'>
+          & Pick<Bot, 'login' | 'avatarUrl' | 'url'>
         ) | (
           { __typename?: 'EnterpriseUserAccount' }
-          & Pick<EnterpriseUserAccount, 'login'>
+          & Pick<EnterpriseUserAccount, 'login' | 'avatarUrl' | 'url'>
         ) | (
           { __typename?: 'Mannequin' }
-          & Pick<Mannequin, 'login'>
+          & Pick<Mannequin, 'login' | 'avatarUrl' | 'url'>
         ) | (
           { __typename?: 'Organization' }
-          & Pick<Organization, 'login'>
+          & Pick<Organization, 'login' | 'avatarUrl' | 'url'>
         ) | (
           { __typename?: 'User' }
-          & Pick<User, 'login'>
+          & Pick<User, 'login' | 'avatarUrl' | 'url'>
         )> }
       ) | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | { __typename?: 'Repository' } | { __typename?: 'User' }> }
     )>>> }
@@ -22186,23 +22189,23 @@ export const GetIssueInfoDocument = gql`
       id
       state
       title
+      createdAt
       author {
         login
+        avatarUrl
+        url
       }
       bodyHTML
       comments(first: 20) {
-        pageInfo {
-          endCursor
-          startCursor
-          hasNextPage
-        }
         edges {
           cursor
           node {
             id
-            createdAt
+            publishedAt
             author {
               login
+              avatarUrl
+              url
             }
             bodyHTML
           }
@@ -22243,16 +22246,21 @@ export type GetIssueInfoQueryHookResult = ReturnType<typeof useGetIssueInfoQuery
 export type GetIssueInfoLazyQueryHookResult = ReturnType<typeof useGetIssueInfoLazyQuery>;
 export type GetIssueInfoQueryResult = Apollo.QueryResult<GetIssueInfoQuery, GetIssueInfoQueryVariables>;
 export const GetRepoIssuesDocument = gql`
-    query getRepoIssues($name: String!, $owner: String!, $state: IssueState!) {
+    query getRepoIssues($name: String!, $owner: String!, $state: IssueState!, $before: String, $after: String, $firstSize: Int, $lastSize: Int) {
   repository(name: $name, owner: $owner) {
     issues(
-      first: 20
+      before: $before
+      after: $after
+      first: $firstSize
+      last: $lastSize
       states: [$state]
       orderBy: {field: CREATED_AT, direction: DESC}
     ) {
+      totalCount
       pageInfo {
-        endCursor
         startCursor
+        endCursor
+        hasPreviousPage
         hasNextPage
       }
       edges {
@@ -22263,6 +22271,8 @@ export const GetRepoIssuesDocument = gql`
           state
           author {
             login
+            avatarUrl
+            url
           }
           title
           createdAt
@@ -22288,6 +22298,10 @@ export const GetRepoIssuesDocument = gql`
  *      name: // value for 'name'
  *      owner: // value for 'owner'
  *      state: // value for 'state'
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      firstSize: // value for 'firstSize'
+ *      lastSize: // value for 'lastSize'
  *   },
  * });
  */
@@ -22303,12 +22317,19 @@ export type GetRepoIssuesQueryHookResult = ReturnType<typeof useGetRepoIssuesQue
 export type GetRepoIssuesLazyQueryHookResult = ReturnType<typeof useGetRepoIssuesLazyQuery>;
 export type GetRepoIssuesQueryResult = Apollo.QueryResult<GetRepoIssuesQuery, GetRepoIssuesQueryVariables>;
 export const GetSearchIssuesDocument = gql`
-    query getSearchIssues($search_term: String!, $cursor: String) {
-  search(query: $search_term, type: ISSUE, first: 20, after: $cursor) {
+    query getSearchIssues($search_term: String!, $after: String, $before: String) {
+  search(
+    query: $search_term
+    type: ISSUE
+    last: 20
+    after: $after
+    before: $before
+  ) {
     issueCount
     pageInfo {
-      endCursor
       startCursor
+      endCursor
+      hasPreviousPage
       hasNextPage
     }
     edges {
@@ -22320,6 +22341,8 @@ export const GetSearchIssuesDocument = gql`
           state
           author {
             login
+            avatarUrl
+            url
           }
           title
           createdAt
@@ -22343,7 +22366,8 @@ export const GetSearchIssuesDocument = gql`
  * const { data, loading, error } = useGetSearchIssuesQuery({
  *   variables: {
  *      search_term: // value for 'search_term'
- *      cursor: // value for 'cursor'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
  *   },
  * });
  */
