@@ -6,47 +6,18 @@
 	> p {
 		font-size: 1.2rem;
 		margin-bottom: 1rem;
-		margin-top: 1rem;
+		margin-top: 2.5rem;
 	}
 
 	.form {
 		display: flex;
-		margin-bottom: 2.5rem;
+		margin-bottom: 0.5rem;
+	}
 
-		.input {
-			width: 90vw;
-			padding: 10px;
-			outline: none;
-			border: 0;
-			border-radius: 10px;
-			font-size: 1rem;
-
-			@media (min-width: 468px) {
-				width: 80vw;
-				padding: 15px;
-				border-radius: 15px;
-			}
-
-			@media (min-width: 1024px) {
-				padding: 20px;
-			}
-		}
-
-		.submitButton {
-			border: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 50px;
-			background-color: transparent;
-			color: #fff;
-			font-size: 1.2rem;
-			cursor: pointer;
-
-			@media (min-width: 479px) {
-				font-size: 1.5rem;
-			}
-		}
+	.error {
+		font-size: 1rem;
+		color: #d73a49;
+		margin-top: 0;
 	}
 
 	.filtersContainer {
@@ -78,5 +49,17 @@
 				margin-top: 0;
 			}
 		}
+	}
+
+	.previousText {
+		margin-bottom: 1.5rem;
+	}
+
+	.previousSearches {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		justify-content: flex-start;
+		margin-top: 1rem;
 	}
 }

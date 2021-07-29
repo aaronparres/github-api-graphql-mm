@@ -9,11 +9,16 @@ import {
 	showErrorModal,
 	toggleSearchIssuesType,
 } from 'store/slices/settings';
+import {
+	selectPreviousSearchElements,
+	updatePreviousSearchTerms,
+} from 'store/slices/search';
 
 import ListItem from 'components/ListItem';
 import PaginationButtonRow from 'components/UI/PaginationButtonRow';
 import FilterButton from 'components/UI/FilterButton';
 import Input from 'components/UI/Input';
+import SearchBadge from 'components/UI/SearchBadge';
 
 import { numberFormatter } from 'shared/utils/numberFormatter';
 
@@ -26,6 +31,7 @@ export default function Search() {
 
 	const dispatch = useAppDispatch();
 	const searchIssuesType = useAppSelector(selectSearchIssuesType);
+	const previousSearchTerms = useAppSelector(selectPreviousSearchElements);
 	const [input, setInput] = useState('');
 	const [query, setQuery] = useState('');
 	const [errorInput, setErrorInput] = useState(false);
@@ -70,6 +76,7 @@ export default function Search() {
 		}
 		setErrorInput(false);
 		getSearchIssues({ variables: { search_term: query || composedQuery } });
+		dispatch(updatePreviousSearchTerms(input));
 	};
 
 	const queryInputHandler = (type: string) => {
@@ -132,7 +139,7 @@ export default function Search() {
 			</form>
 
 			{errorInput ? (
-				<p>Invalid value</p>
+				<p className={styles.error}>Invalid input value</p>
 			) : data?.search?.edges?.length ? (
 				<>
 					<p>{numberFormatter(data.search.issueCount)} total issues</p>
@@ -159,8 +166,21 @@ export default function Search() {
 						endCursor={data?.search?.pageInfo?.endCursor}
 					/>
 				</>
+			) : called && !loading ? (
+				<p>No results found...</p>
 			) : (
-				called && !loading && <p>No results found...</p>
+				<>
+					{previousSearchTerms.length > 0 && !loading && (
+						<>
+							<p className={styles.previousText}>Previous searched terms</p>
+							<div className={styles.previousSearches}>
+								{previousSearchTerms.map((term, index) => (
+									<SearchBadge key={index} text={term} click={setInput} />
+								))}
+							</div>
+						</>
+					)}
+				</>
 			)}
 		</div>
 	);
