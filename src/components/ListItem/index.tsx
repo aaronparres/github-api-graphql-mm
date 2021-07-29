@@ -33,17 +33,22 @@ export default function IssueItem({
 		>
 			<div className={styles.header}>
 				<div className={styles.status}>
-					<StatusBadge state={state} />
+					<span>
+						<StatusBadge state={state} />
+					</span>
 					<h2>{title}</h2>
 				</div>
-				<div className={styles.user}>
-					<img src={image} alt={user} />
-					<a href={userUrl || '#'}>
-						<p className={styles.name}>{user}</p>
-					</a>
-
-					<p>{`opened ${dateFormatter(String(date))}`}</p>
-					<p className={styles.number}># {number}</p>
+				<div className={styles.subtitle}>
+					<div className={styles.user}>
+						<img src={image} alt={user} />
+						<a href={userUrl || '#'}>
+							<p className={styles.name}>{user}</p>
+						</a>
+					</div>
+					<div className={styles.date}>
+						<p>{`opened ${dateFormatter(String(date))}`}</p>
+						<p className={styles.number}>{`#${number}`}</p>
+					</div>
 				</div>
 			</div>
 		</div>

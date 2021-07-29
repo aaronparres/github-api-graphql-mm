@@ -8,7 +8,7 @@ import { IssueState } from 'hooks/apihooks';
 import styles from './styles.module.scss';
 
 interface StatusBadgeProps {
-	state: IssueState;
+	state?: IssueState;
 }
 
 export default function StatusBadge({ state }: StatusBadgeProps) {
