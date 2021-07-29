@@ -1,5 +1,4 @@
-import { useState, FormEvent, useEffect, useCallback } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState, FormEvent, useEffect } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { Issue, Maybe, useGetSearchIssuesLazyQuery } from 'hooks/apihooks';
@@ -14,6 +13,9 @@ import {
 import ListItem from 'components/ListItem';
 import PaginationButtonRow from 'components/UI/PaginationButtonRow';
 import FilterButton from 'components/UI/FilterButton';
+import Input from 'components/UI/Input';
+
+import { numberFormatter } from 'shared/utils/numberFormatter';
 
 import styles from './styles.module.scss';
 
@@ -120,23 +122,20 @@ export default function Search() {
 				</div>
 			</div>
 			<form className={styles.form} onSubmit={searchFormHandler}>
-				<input
-					className={styles.input}
+				<Input
 					type="search"
 					placeholder="Search issues..."
 					value={input}
-					onChange={(e) => setInput(e.target.value)}
+					icon={faSearch}
+					inputHandler={setInput}
 				/>
-				<button type="submit" className={styles.submitButton}>
-					<FontAwesomeIcon icon={faSearch} />
-				</button>
 			</form>
 
 			{errorInput ? (
 				<p>Invalid value</p>
 			) : data?.search?.edges?.length ? (
 				<>
-					<p>{data.search.issueCount} total issues</p>
+					<p>{numberFormatter(data.search.issueCount)} total issues</p>
 					{data?.search?.edges?.map((issue) => {
 						const { title, id, number, state, createdAt, author } =
 							issue?.node as Issue;

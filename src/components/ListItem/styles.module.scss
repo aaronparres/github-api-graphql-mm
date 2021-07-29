@@ -1,93 +1,85 @@
-.content {
-	width: 100%;
-	background-color: #e0e0e0;
-	border: 1px solid #e0e0e0;
-	border-radius: 15px;
-	margin-bottom: 1.5rem;
+.header {
+	padding: 25px;
+	color: #000;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 
-	.header {
-		padding: 25px;
-		color: #000;
+	.status {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 
-		.status {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
+		> span {
+			margin-bottom: 1rem;
+		}
+
+		h2 {
+			word-break: break-word;
+			font-size: 1.2rem;
+		}
+
+		@media (min-width: 768px) {
+			flex-direction: row;
 
 			> span {
-				margin-bottom: 1rem;
+				margin-bottom: 0.5rem;
 			}
 
 			h2 {
-				word-break: break-word;
-				font-size: 1.2rem;
-			}
-
-			@media (min-width: 768px) {
-				flex-direction: row;
-
-				> span {
-					margin-bottom: 0.5rem;
-				}
-
-				h2 {
-					font-size: 1.5rem;
-					margin-left: 1rem;
-				}
+				font-size: 1.5rem;
+				margin-left: 1rem;
 			}
 		}
+	}
 
-		.number {
-			color: #35459c;
-			font-weight: bold;
-			margin-left: 0.6rem;
-		}
+	.number {
+		color: #35459c;
+		font-weight: bold;
+		margin-left: 0.6rem;
+	}
 
-		.subtitle {
+	.subtitle {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-top: 1rem;
+
+		.user {
 			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			margin-top: 1rem;
+			align-items: center;
 
-			.user {
-				display: flex;
-				align-items: center;
-
-				img {
-					border-radius: 50px;
-					width: 2.2rem;
-				}
-
-				> a {
-					text-decoration: none;
-					color: #000;
-				}
-
-				.name {
-					margin-left: 0.5rem;
-					margin-right: 0.5rem;
-					font-weight: bold;
-				}
+			img {
+				border-radius: 50px;
+				width: 2.2rem;
 			}
+
+			> a {
+				text-decoration: none;
+				color: #000;
+			}
+
+			.name {
+				margin-left: 0.5rem;
+				margin-right: 0.5rem;
+				font-weight: bold;
+			}
+		}
+
+		.date {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			margin-top: 0.5rem;
+		}
+
+		@media (min-width: 768px) {
+			flex-direction: row;
+			align-items: center;
+			margin-top: 0.5rem;
 
 			.date {
-				display: flex;
-				align-items: center;
-				justify-content: flex-start;
-				margin-top: 0.5rem;
-			}
-
-			@media (min-width: 768px) {
-				flex-direction: row;
-				align-items: center;
-				margin-top: 0.5rem;
-
-				.date {
-					margin-top: 0;
-				}
+				margin-top: 0;
 			}
 		}
 	}

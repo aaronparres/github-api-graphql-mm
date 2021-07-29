@@ -13,6 +13,8 @@ import ListItem from 'components/ListItem';
 import PaginationButtonRow from 'components/UI/PaginationButtonRow';
 import FilterButton from 'components/UI/FilterButton';
 
+import { numberFormatter } from 'shared/utils/numberFormatter';
+
 import styles from './styles.module.scss';
 
 export default function Issues() {
@@ -81,7 +83,9 @@ export default function Issues() {
 			</div>
 			{data?.repository?.issues?.edges?.length ? (
 				<>
-					<p>{`${data.repository.issues.totalCount} total issues`}</p>
+					<p>{`${numberFormatter(
+						data.repository.issues.totalCount,
+					)} total issues`}</p>
 					{data?.repository?.issues?.edges?.map((issue) => (
 						<ListItem
 							key={issue?.node?.id}
