@@ -12,6 +12,8 @@ import {
 import ListItem from 'components/ListItem';
 
 import styles from './styles.module.scss';
+import PaginationButton from 'components/UI/PaginationButtonRow/PaginationButton';
+import PaginationButtonRow from 'components/UI/PaginationButtonRow';
 
 export default function Issues() {
 	useEffect(() => {
@@ -63,7 +65,8 @@ export default function Issues() {
 	};
 
 	return (
-		<div>
+		<>
+			<h2 className={styles.mainTitle}>Issues</h2>
 			<div className={styles.buttonContainer}>
 				<div
 					className={`${
@@ -84,9 +87,8 @@ export default function Issues() {
 					<div onClick={() => switchHandler(IssueState.Closed)}>Closed</div>
 				</div>
 			</div>
-			<h2 className={styles.mainTitle}>Issues</h2>
 			{data?.repository?.issues?.edges?.length ? (
-				<>
+				<div className={styles.listContainer}>
 					<p>{`${data.repository.issues.totalCount} total issues`}</p>
 					{data?.repository?.issues?.edges?.map((issue) => (
 						<ListItem
@@ -99,32 +101,15 @@ export default function Issues() {
 							image={issue?.node?.author?.avatarUrl}
 						/>
 					))}
-					{data?.repository?.issues?.pageInfo?.hasPreviousPage && (
-						<button
-							onClick={() =>
-								pageHandler(
-									data?.repository?.issues?.pageInfo?.startCursor,
-									'before',
-								)
-							}
-						>
-							Previous
-						</button>
-					)}
-					{data?.repository?.issues?.pageInfo?.hasNextPage && (
-						<button
-							onClick={() =>
-								pageHandler(
-									data?.repository?.issues?.pageInfo?.endCursor,
-									'after',
-								)
-							}
-						>
-							Next
-						</button>
-					)}
-				</>
+					<PaginationButtonRow
+						changePageHandler={pageHandler}
+						hasPrevious={data?.repository?.issues?.pageInfo?.hasPreviousPage}
+						hasNext={data?.repository?.issues?.pageInfo?.hasNextPage}
+						startCursor={data?.repository?.issues?.pageInfo?.startCursor}
+						endCursor={data?.repository?.issues?.pageInfo?.endCursor}
+					/>
+				</div>
 			) : null}
-		</div>
+		</>
 	);
 }

@@ -36,7 +36,7 @@ export default function IssueItem({
 					<StatusBadge state={state} />
 					<h2>{title}</h2>
 				</div>
-				{/* <div className={styles.user}>
+				<div className={styles.user}>
 					<img src={image} alt={user} />
 					<a href={userUrl || '#'}>
 						<p className={styles.name}>{user}</p>
@@ -44,7 +44,7 @@ export default function IssueItem({
 
 					<p>{`opened ${dateFormatter(String(date))}`}</p>
 					<p className={styles.number}># {number}</p>
-				</div> */}
+				</div>
 			</div>
 		</div>
 	);

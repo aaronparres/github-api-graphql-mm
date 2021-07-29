@@ -12,6 +12,7 @@ import {
 } from 'store/slices/settings';
 
 import ListItem from 'components/ListItem';
+import PaginationButtonRow from 'components/UI/PaginationButtonRow';
 
 import styles from './styles.module.scss';
 
@@ -145,24 +146,13 @@ export default function Search() {
 							/>
 						);
 					})}
-					{data?.search?.pageInfo?.hasPreviousPage && (
-						<button
-							onClick={() =>
-								pageHandler(data?.search?.pageInfo?.startCursor, 'before')
-							}
-						>
-							Previous
-						</button>
-					)}
-					{data?.search?.pageInfo?.hasNextPage && (
-						<button
-							onClick={() =>
-								pageHandler(data?.search?.pageInfo?.endCursor, 'after')
-							}
-						>
-							Next
-						</button>
-					)}
+					<PaginationButtonRow
+						changePageHandler={pageHandler}
+						hasPrevious={data?.search?.pageInfo?.hasPreviousPage}
+						hasNext={data?.search?.pageInfo?.hasNextPage}
+						startCursor={data?.search?.pageInfo?.startCursor}
+						endCursor={data?.search?.pageInfo?.endCursor}
+					/>
 				</>
 			) : (
 				called && !loading && <p>No results found...</p>

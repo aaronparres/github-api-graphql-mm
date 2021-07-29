@@ -1,11 +1,9 @@
 .content {
 	width: 100%;
-	margin-bottom: 2rem;
 	background-color: #e0e0e0;
+	border: 1px solid #e0e0e0;
 	border-radius: 15px;
-	word-wrap: break-word;
-	overflow: visible;
-	line-height: 1.5;
+	margin-bottom: 1.5rem;
 }
 
 .header {
@@ -51,6 +49,11 @@
 			margin-left: 0.5rem;
 			margin-right: 0.5rem;
 			font-weight: bold;
+		}
+
+		@media (min-width: 768px) {
+			flex-direction: row;
+			margin-top: 0;
 		}
 	}
 }
